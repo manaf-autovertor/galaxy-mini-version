@@ -2,8 +2,9 @@ import axios from "axios";
 import { useAuthStore } from "../store/authStore";
 
 // Use environment variable for API base URL
-// const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://los_galaxy.test";
-const API_BASE_URL = "https://los_galaxy.test";
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "https://los_galaxy.test";
+// const API_BASE_URL = "https://los_galaxy.test";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
