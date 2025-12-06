@@ -217,9 +217,9 @@ function ChatWindow() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex flex-col">
+    <div className="h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex flex-col overflow-hidden">
       {/* Header */}
-      <div className="sticky top-0 z-20 backdrop-blur-xl bg-white/80 border-b border-white/20 shadow-lg safe-top">
+      <div className="flex-shrink-0 z-20 backdrop-blur-xl bg-white/80 border-b border-white/20 shadow-lg safe-top">
         <div className="px-6 py-5">
           <div className="flex items-center gap-4 mb-4">
             <button
@@ -318,7 +318,7 @@ function ChatWindow() {
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
+      <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4 custom-scrollbar pb-4">
         {messages.length === 0 ? (
           <div className="flex items-center justify-center py-20">
             <div className="text-center">
@@ -421,7 +421,7 @@ function ChatWindow() {
 
       {/* Input Area */}
       {canInteract ? (
-        <div className="backdrop-blur-xl bg-white/90 border-t border-gray-200 px-6 py-4 pb-28 shadow-lg">
+        <div className="flex-shrink-0 backdrop-blur-xl bg-white/90 border-t border-gray-200 px-6 py-4 shadow-lg safe-bottom">
           {/* Attachments Preview */}
           {attachments.length > 0 && (
             <div className="mb-4 flex flex-wrap gap-2">
@@ -446,10 +446,10 @@ function ChatWindow() {
           )}
 
           {/* Input Row */}
-          <div className="flex items-end gap-3">
+          <div className="flex items-center gap-3">
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="p-3.5 bg-gradient-to-br from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 rounded-2xl transition-all flex-shrink-0 shadow-lg hover:shadow-xl active:scale-95"
+              className="p-3.5 bg-gradient-to-br from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 rounded-2xl transition-all flex-shrink-0 shadow-lg hover:shadow-xl active:scale-95 h-[52px] w-[52px]"
             >
               <Paperclip className="w-5 h-5 text-white" />
             </button>
@@ -482,7 +482,7 @@ function ChatWindow() {
               disabled={
                 sending || (!messageBody.trim() && attachments.length === 0)
               }
-              className="p-3.5 bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white rounded-2xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0 shadow-lg hover:shadow-xl active:scale-95"
+              className="p-3.5 bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white rounded-2xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0 shadow-lg hover:shadow-xl active:scale-95 h-[52px] w-[52px]"
             >
               {sending ? (
                 <Loader2 className="w-5 h-5 animate-spin" />
@@ -493,7 +493,7 @@ function ChatWindow() {
           </div>
         </div>
       ) : (
-        <div className="backdrop-blur-xl bg-gradient-to-br from-red-50 to-rose-50 border-t border-red-200 px-6 py-5 text-center pb-28 shadow-lg">
+        <div className="flex-shrink-0 backdrop-blur-xl bg-gradient-to-br from-red-50 to-rose-50 border-t border-red-200 px-6 py-5 text-center shadow-lg safe-bottom">
           <div className="inline-flex items-center gap-2 px-5 py-3 bg-white rounded-2xl shadow-md border border-red-200">
             <XCircle className="w-5 h-5 text-red-500" />
             <p className="text-gray-700 text-sm font-bold">
