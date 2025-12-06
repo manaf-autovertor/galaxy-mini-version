@@ -165,8 +165,8 @@ function QueryList() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex flex-col">
       {/* Header */}
       <div className="sticky top-0 z-20 backdrop-blur-xl bg-white/80 border-b border-white/20 shadow-lg safe-top">
-        <div className="px-6 py-6">
-          <div className="flex items-center gap-4 mb-4">
+        <div className="px-6 py-4">
+          <div className="flex items-center gap-4 mb-3">
             <button
               onClick={() => navigate("/home")}
               className="p-2.5 bg-gradient-to-br from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 rounded-2xl shadow-lg hover:shadow-xl transition-all active:scale-95"
@@ -183,19 +183,19 @@ function QueryList() {
 
           {/* Search Bar */}
           <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-4 text-gray-400" />
             <input
               type="text"
               placeholder="Search queries..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3.5 bg-white rounded-2xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 shadow-md border border-gray-100"
+              className="w-full pl-12 pr-4 py-2.5 bg-white rounded-2xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 shadow-md border border-gray-100"
             />
           </div>
         </div>
 
         {/* Main Tabs */}
-        <div className="flex px-4 gap-3 mt-4">
+        <div className="flex px-4 gap-3 pb-3 pt-2">
           <button
             onClick={() => {
               setMainTab("raised_to_you");
