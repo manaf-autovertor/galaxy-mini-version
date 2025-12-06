@@ -50,9 +50,6 @@ function BottomNav() {
                     onClick={() => navigate(item.route)}
                     className="relative -mt-8 group"
                   >
-                    {/* Outer Glow Ring */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-amber-500 rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity animate-pulse"></div>
-
                     {/* Main Button */}
                     <div className="relative w-16 h-16 bg-gradient-to-br from-orange-500 to-amber-600 rounded-full flex items-center justify-center shadow-2xl group-hover:shadow-3xl transition-all group-active:scale-95">
                       <item.icon
