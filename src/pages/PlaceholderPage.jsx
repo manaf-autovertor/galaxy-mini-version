@@ -29,7 +29,8 @@ function PlaceholderPage({ title, description }) {
           </div>
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Coming Soon</h2>
           <p className="text-gray-600 max-w-sm mx-auto">
-            {description || `The ${title} feature is currently under development.`}
+            {description ||
+              `The ${title} feature is currently under development.`}
           </p>
         </div>
       </div>

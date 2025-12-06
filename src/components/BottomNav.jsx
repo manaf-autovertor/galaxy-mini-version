@@ -1,5 +1,11 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { Home, FileText, MessageSquarePlus, User, LayoutGrid } from "lucide-react";
+import {
+  Home,
+  FileText,
+  MessageSquarePlus,
+  User,
+  LayoutGrid,
+} from "lucide-react";
 
 function BottomNav() {
   const navigate = useNavigate();
@@ -7,8 +13,19 @@ function BottomNav() {
 
   const navItems = [
     { id: "home", icon: Home, label: "Home", route: "/home" },
-    { id: "applications", icon: FileText, label: "Apps", route: "/applications" },
-    { id: "queries", icon: MessageSquarePlus, label: "", route: "/queries", isCenter: true },
+    {
+      id: "applications",
+      icon: FileText,
+      label: "Apps",
+      route: "/applications",
+    },
+    {
+      id: "queries",
+      icon: MessageSquarePlus,
+      label: "",
+      route: "/queries",
+      isCenter: true,
+    },
     { id: "more", icon: LayoutGrid, label: "More", route: "/more" },
     { id: "profile", icon: User, label: "Profile", route: "/profile" },
   ];
@@ -21,7 +38,7 @@ function BottomNav() {
       <div className="relative">
         {/* Gradient Glow Effect */}
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-white via-white/50 to-transparent pointer-events-none"></div>
-        
+
         {/* Main Nav Bar */}
         <div className="relative mx-4 mb-4 backdrop-blur-xl bg-white/90 rounded-3xl shadow-2xl border border-white/20">
           <div className="flex items-center justify-around px-2 py-2">
@@ -35,10 +52,13 @@ function BottomNav() {
                   >
                     {/* Outer Glow Ring */}
                     <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-amber-500 rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity animate-pulse"></div>
-                    
+
                     {/* Main Button */}
                     <div className="relative w-16 h-16 bg-gradient-to-br from-orange-500 to-amber-600 rounded-full flex items-center justify-center shadow-2xl group-hover:shadow-3xl transition-all group-active:scale-95">
-                      <item.icon className="w-8 h-8 text-white" strokeWidth={2.5} />
+                      <item.icon
+                        className="w-8 h-8 text-white"
+                        strokeWidth={2.5}
+                      />
                     </div>
 
                     {/* Ripple Effect */}
@@ -54,7 +74,9 @@ function BottomNav() {
                   key={item.id}
                   onClick={() => navigate(item.route)}
                   className={`flex flex-col items-center gap-1 px-4 py-3 rounded-2xl transition-all group ${
-                    active ? "bg-gradient-to-br from-indigo-50 to-purple-50" : "hover:bg-gray-50"
+                    active
+                      ? "bg-gradient-to-br from-indigo-50 to-purple-50"
+                      : "hover:bg-gray-50"
                   }`}
                 >
                   <div
@@ -72,7 +94,8 @@ function BottomNav() {
                       style={
                         active
                           ? {
-                              filter: "drop-shadow(0 0 8px rgba(99, 102, 241, 0.3))",
+                              filter:
+                                "drop-shadow(0 0 8px rgba(99, 102, 241, 0.3))",
                             }
                           : {}
                       }

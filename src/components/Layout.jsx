@@ -3,7 +3,7 @@ import BottomNav from "./BottomNav";
 
 function Layout() {
   const location = useLocation();
-  
+
   // Don't show bottom nav on login page
   const hideBottomNav = location.pathname === "/login";
 

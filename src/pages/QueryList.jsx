@@ -168,12 +168,18 @@ function QueryList() {
         <div className="px-6 py-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
-              <img src="/logo_light.png" alt="Galaxy Logo" className="h-9 w-auto" />
+              <img
+                src="/logo_light.png"
+                alt="Galaxy Logo"
+                className="h-9 w-auto"
+              />
               <div>
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-amber-600 bg-clip-text text-transparent">
                   Queries
                 </h1>
-                <p className="text-xs text-gray-600">Welcome, {user?.name?.split(" ")[0]}</p>
+                <p className="text-xs text-gray-600">
+                  Welcome, {user?.name?.split(" ")[0]}
+                </p>
               </div>
             </div>
             <button
@@ -295,7 +301,9 @@ function QueryList() {
               <div className="w-20 h-20 bg-gradient-to-br from-orange-100 to-amber-100 rounded-3xl flex items-center justify-center mx-auto mb-4">
                 <MessageSquare className="w-10 h-10 text-orange-500" />
               </div>
-              <p className="text-gray-900 font-bold text-lg">No queries found</p>
+              <p className="text-gray-900 font-bold text-lg">
+                No queries found
+              </p>
               <p className="text-sm text-gray-500 mt-2">
                 {searchQuery
                   ? "Try adjusting your search"

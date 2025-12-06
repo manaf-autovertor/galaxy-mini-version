@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useAuthStore } from '../store/authStore';
-import { useQueryStore } from '../store/queryStore';
-import { queryService } from '../services/queryService';
-import { joinPresenceChannel } from '../services/echoService';
-import toast from 'react-hot-toast';
+import { useState, useEffect, useRef } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/authStore";
+import { useQueryStore } from "../store/queryStore";
+import { queryService } from "../services/queryService";
+import { joinPresenceChannel } from "../services/echoService";
+import toast from "react-hot-toast";
 import {
   ArrowLeft,
   Send,
@@ -20,14 +20,14 @@ import {
   MoreVertical,
   XCircle,
   Loader2,
-} from 'lucide-react';
-import { format, isToday, isYesterday } from 'date-fns';
+} from "lucide-react";
+import { format, isToday, isYesterday } from "date-fns";
 
 function ChatWindow() {
   const { queryId } = useParams();
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
-  
+
   const selectedQuery = useQueryStore((state) => state.selectedQuery);
   const messages = useQueryStore((state) => state.messages);
   const setSelectedQuery = useQueryStore((state) => state.setSelectedQuery);
@@ -37,7 +37,7 @@ function ChatWindow() {
 
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
-  const [messageBody, setMessageBody] = useState('');
+  const [messageBody, setMessageBody] = useState("");
   const [showDetails, setShowDetails] = useState(false);
   const [showActions, setShowActions] = useState(false);
   const [attachments, setAttachments] = useState([]);
@@ -67,23 +67,26 @@ function ChatWindow() {
   }, [messages]);
 
   const handleRealtimeUpdate = (event) => {
-    console.log('Chat real-time update:', event);
-    
-    if (event.type === 'QUERY_MESSAGE' && event.query_id == queryId) {
+    console.log("Chat real-time update:", event);
+
+    if (event.type === "QUERY_MESSAGE" && event.query_id == queryId) {
       // Add new message to list
       if (event.message) {
         addMessage(event.message);
       } else {
         loadMessages(); // Fallback
       }
-      
+
       // Play notification sound
-      const audio = new Audio('/sounds/bell.mp3');
-      audio.play().catch(e => console.warn('Audio play failed:', e));
-    } else if (event.type === 'QUERY_MESSAGE_CLOSED' && event.query_id == queryId) {
-      updateQueryStatus(queryId, 'CLOSED');
-      setSelectedQuery({ ...selectedQuery, status: 'CLOSED' });
-      toast('Query closed', { icon: '✓' });
+      const audio = new Audio("/sounds/bell.mp3");
+      audio.play().catch((e) => console.warn("Audio play failed:", e));
+    } else if (
+      event.type === "QUERY_MESSAGE_CLOSED" &&
+      event.query_id == queryId
+    ) {
+      updateQueryStatus(queryId, "CLOSED");
+      setSelectedQuery({ ...selectedQuery, status: "CLOSED" });
+      toast("Query closed", { icon: "✓" });
     }
   };
 
@@ -93,8 +96,8 @@ function ChatWindow() {
       const data = await queryService.getQuery(queryId);
       setSelectedQuery(data);
     } catch (error) {
-      console.error('Failed to load query:', error);
-      toast.error('Failed to load query details');
+      console.error("Failed to load query:", error);
+      toast.error("Failed to load query details");
     } finally {
       setLoading(false);
     }
@@ -105,18 +108,18 @@ function ChatWindow() {
       const data = await queryService.getMessages(queryId);
       setMessages(data);
     } catch (error) {
-      console.error('Failed to load messages:', error);
-      toast.error('Failed to load messages');
+      console.error("Failed to load messages:", error);
+      toast.error("Failed to load messages");
     }
   };
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleSendMessage = async () => {
     if (!messageBody.trim() && attachments.length === 0) {
-      toast.error('Please enter a message or attach a file');
+      toast.error("Please enter a message or attach a file");
       return;
     }
 
@@ -124,7 +127,7 @@ function ChatWindow() {
 
     try {
       const formData = new FormData();
-      formData.append('body', messageBody);
+      formData.append("body", messageBody);
 
       if (attachments.length > 0) {
         attachments.forEach((file, index) => {
@@ -133,17 +136,17 @@ function ChatWindow() {
       }
 
       await queryService.sendMessage(queryId, formData);
-      
-      setMessageBody('');
+
+      setMessageBody("");
       setAttachments([]);
-      
+
       // Reload messages
       await loadMessages();
-      
-      toast.success('Message sent');
+
+      toast.success("Message sent");
     } catch (error) {
-      console.error('Failed to send message:', error);
-      toast.error('Failed to send message');
+      console.error("Failed to send message:", error);
+      toast.error("Failed to send message");
     } finally {
       setSending(false);
     }
@@ -159,48 +162,48 @@ function ChatWindow() {
   };
 
   const handleCloseQuery = async () => {
-    if (!window.confirm('Are you sure you want to close this query?')) {
+    if (!window.confirm("Are you sure you want to close this query?")) {
       return;
     }
 
     try {
-      await queryService.closeQuery(queryId, { status: 'CLOSED' });
-      updateQueryStatus(queryId, 'CLOSED');
-      setSelectedQuery({ ...selectedQuery, status: 'CLOSED' });
-      toast.success('Query closed successfully');
+      await queryService.closeQuery(queryId, { status: "CLOSED" });
+      updateQueryStatus(queryId, "CLOSED");
+      setSelectedQuery({ ...selectedQuery, status: "CLOSED" });
+      toast.success("Query closed successfully");
       setShowActions(false);
     } catch (error) {
-      console.error('Failed to close query:', error);
-      toast.error('Failed to close query');
+      console.error("Failed to close query:", error);
+      toast.error("Failed to close query");
     }
   };
 
   const formatMessageDate = (date) => {
     const messageDate = new Date(date);
-    
+
     if (isToday(messageDate)) {
-      return format(messageDate, 'HH:mm');
+      return format(messageDate, "HH:mm");
     } else if (isYesterday(messageDate)) {
-      return `Yesterday ${format(messageDate, 'HH:mm')}`;
+      return `Yesterday ${format(messageDate, "HH:mm")}`;
     } else {
-      return format(messageDate, 'MMM dd, HH:mm');
+      return format(messageDate, "MMM dd, HH:mm");
     }
   };
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'PENDING':
-        return 'bg-gradient-to-r from-orange-500 to-amber-500 text-white';
-      case 'REVERTED':
-        return 'bg-gradient-to-r from-red-500 to-rose-500 text-white';
-      case 'CLOSED':
-        return 'bg-gradient-to-r from-green-500 to-emerald-500 text-white';
+      case "PENDING":
+        return "bg-gradient-to-r from-orange-500 to-amber-500 text-white";
+      case "REVERTED":
+        return "bg-gradient-to-r from-red-500 to-rose-500 text-white";
+      case "CLOSED":
+        return "bg-gradient-to-r from-green-500 to-emerald-500 text-white";
       default:
-        return 'bg-gradient-to-r from-gray-500 to-slate-500 text-white';
+        return "bg-gradient-to-r from-gray-500 to-slate-500 text-white";
     }
   };
 
-  const canInteract = selectedQuery?.status !== 'CLOSED';
+  const canInteract = selectedQuery?.status !== "CLOSED";
 
   if (loading) {
     return (
@@ -220,7 +223,7 @@ function ChatWindow() {
         <div className="px-6 py-5">
           <div className="flex items-center gap-4 mb-4">
             <button
-              onClick={() => navigate('/queries')}
+              onClick={() => navigate("/queries")}
               className="p-2.5 bg-gradient-to-br from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 rounded-2xl shadow-lg hover:shadow-xl transition-all active:scale-95"
             >
               <ArrowLeft className="w-5 h-5 text-white" />
@@ -230,7 +233,8 @@ function ChatWindow() {
                 {selectedQuery?.query_reference || `Query #${queryId}`}
               </h2>
               <p className="text-xs text-gray-600 mt-1 font-medium">
-                {selectedQuery?.query_category} • {selectedQuery?.query_subcategory}
+                {selectedQuery?.query_category} •{" "}
+                {selectedQuery?.query_subcategory}
               </p>
             </div>
             <button
@@ -249,7 +253,11 @@ function ChatWindow() {
 
           {/* Status Badge */}
           <div className="flex items-center gap-2">
-            <span className={`px-4 py-1.5 rounded-2xl text-xs font-bold shadow-md ${getStatusColor(selectedQuery?.status)}`}>
+            <span
+              className={`px-4 py-1.5 rounded-2xl text-xs font-bold shadow-md ${getStatusColor(
+                selectedQuery?.status
+              )}`}
+            >
               {selectedQuery?.status}
             </span>
             {selectedQuery?.is_priority && (
@@ -265,20 +273,29 @@ function ChatWindow() {
           <div className="bg-gradient-to-br from-white to-gray-50 text-gray-900 px-6 py-4 border-t border-gray-200 text-sm space-y-3 shadow-inner">
             <div className="flex justify-between items-center p-3 bg-white rounded-2xl shadow-sm">
               <span className="text-gray-600 font-medium">Application ID:</span>
-              <span className="font-bold text-gray-900">{selectedQuery?.application_id}</span>
+              <span className="font-bold text-gray-900">
+                {selectedQuery?.application_id}
+              </span>
             </div>
             <div className="flex justify-between items-center p-3 bg-white rounded-2xl shadow-sm">
               <span className="text-gray-600 font-medium">Type:</span>
-              <span className="font-bold text-gray-900">{selectedQuery?.query_type}</span>
+              <span className="font-bold text-gray-900">
+                {selectedQuery?.query_type}
+              </span>
             </div>
             <div className="flex justify-between items-center p-3 bg-white rounded-2xl shadow-sm">
               <span className="text-gray-600 font-medium">Subcategory:</span>
-              <span className="font-bold text-gray-900">{selectedQuery?.query_subcategory}</span>
+              <span className="font-bold text-gray-900">
+                {selectedQuery?.query_subcategory}
+              </span>
             </div>
             <div className="flex justify-between items-center p-3 bg-white rounded-2xl shadow-sm">
               <span className="text-gray-600 font-medium">Created:</span>
               <span className="font-bold text-gray-900">
-                {format(new Date(selectedQuery?.created_at), 'MMM dd, yyyy HH:mm')}
+                {format(
+                  new Date(selectedQuery?.created_at),
+                  "MMM dd, yyyy HH:mm"
+                )}
               </span>
             </div>
           </div>
@@ -309,28 +326,39 @@ function ChatWindow() {
                 <FileText className="w-10 h-10 text-indigo-600" />
               </div>
               <p className="text-gray-900 font-bold text-lg">No messages yet</p>
-              <p className="text-sm text-gray-500 mt-2">Start the conversation</p>
+              <p className="text-sm text-gray-500 mt-2">
+                Start the conversation
+              </p>
             </div>
           </div>
         ) : (
           messages.map((message, index) => {
             const isOwnMessage = message.user_id === user?.id;
-            const showDateDivider = index === 0 || 
-              format(new Date(messages[index - 1].created_at), 'yyyy-MM-dd') !== 
-              format(new Date(message.created_at), 'yyyy-MM-dd');
+            const showDateDivider =
+              index === 0 ||
+              format(new Date(messages[index - 1].created_at), "yyyy-MM-dd") !==
+                format(new Date(message.created_at), "yyyy-MM-dd");
 
             return (
               <div key={message.id}>
                 {showDateDivider && (
                   <div className="flex items-center justify-center my-6">
                     <span className="px-4 py-2 bg-white text-gray-700 text-xs font-bold rounded-2xl shadow-md border border-gray-200">
-                      {format(new Date(message.created_at), 'MMMM dd, yyyy')}
+                      {format(new Date(message.created_at), "MMMM dd, yyyy")}
                     </span>
                   </div>
                 )}
 
-                <div className={`flex ${isOwnMessage ? 'justify-end' : 'justify-start'} animate-fade-in`}>
-                  <div className={`max-w-[80%] ${isOwnMessage ? 'items-end' : 'items-start'} flex flex-col`}>
+                <div
+                  className={`flex ${
+                    isOwnMessage ? "justify-end" : "justify-start"
+                  } animate-fade-in`}
+                >
+                  <div
+                    className={`max-w-[80%] ${
+                      isOwnMessage ? "items-end" : "items-start"
+                    } flex flex-col`}
+                  >
                     {!isOwnMessage && (
                       <div className="flex items-center gap-2 mb-2 px-2">
                         <div className="w-6 h-6 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center shadow-md">
@@ -341,38 +369,45 @@ function ChatWindow() {
                         </span>
                       </div>
                     )}
-                    
+
                     <div
                       className={`rounded-3xl px-5 py-3.5 shadow-lg ${
                         isOwnMessage
-                          ? 'bg-gradient-to-br from-orange-500 to-amber-600 text-white rounded-br-lg'
-                          : 'bg-white text-gray-900 rounded-bl-lg border border-gray-100'
+                          ? "bg-gradient-to-br from-orange-500 to-amber-600 text-white rounded-br-lg"
+                          : "bg-white text-gray-900 rounded-bl-lg border border-gray-100"
                       }`}
                     >
                       <div
                         className="text-sm break-words leading-relaxed"
-                        dangerouslySetInnerHTML={{ __html: message.safe_body_html || message.body }}
+                        dangerouslySetInnerHTML={{
+                          __html: message.safe_body_html || message.body,
+                        }}
                       />
-                      
-                      {message.attachments && message.attachments.length > 0 && (
-                        <div className="mt-2 pt-2 border-t border-white/20 space-y-1">
-                          {message.attachments.map((attachment, i) => (
-                            <a
-                              key={i}
-                              href={attachment.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center gap-2 text-xs hover:underline"
-                            >
-                              <Paperclip className="w-3 h-3" />
-                              {attachment.name}
-                            </a>
-                          ))}
-                        </div>
-                      )}
+
+                      {message.attachments &&
+                        message.attachments.length > 0 && (
+                          <div className="mt-2 pt-2 border-t border-white/20 space-y-1">
+                            {message.attachments.map((attachment, i) => (
+                              <a
+                                key={i}
+                                href={attachment.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-2 text-xs hover:underline"
+                              >
+                                <Paperclip className="w-3 h-3" />
+                                {attachment.name}
+                              </a>
+                            ))}
+                          </div>
+                        )}
                     </div>
-                    
-                    <span className={`text-xs mt-1 px-1 ${isOwnMessage ? 'text-gray-600' : 'text-gray-500'}`}>
+
+                    <span
+                      className={`text-xs mt-1 px-1 ${
+                        isOwnMessage ? "text-gray-600" : "text-gray-500"
+                      }`}
+                    >
                       {formatMessageDate(message.created_at)}
                     </span>
                   </div>
@@ -396,7 +431,9 @@ function ChatWindow() {
                   className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl text-sm shadow-md border border-indigo-100"
                 >
                   <FileText className="w-4 h-4 text-indigo-600" />
-                  <span className="text-gray-700 font-medium max-w-[150px] truncate">{file.name}</span>
+                  <span className="text-gray-700 font-medium max-w-[150px] truncate">
+                    {file.name}
+                  </span>
                   <button
                     onClick={() => removeAttachment(index)}
                     className="p-1 hover:bg-white rounded-full transition-colors"
@@ -416,7 +453,7 @@ function ChatWindow() {
             >
               <Paperclip className="w-5 h-5 text-white" />
             </button>
-            
+
             <input
               ref={fileInputRef}
               type="file"
@@ -432,17 +469,19 @@ function ChatWindow() {
                 placeholder="Type a message..."
                 rows={1}
                 className="w-full px-5 py-3.5 bg-white rounded-3xl resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-gray-900 shadow-md border border-gray-200"
-                style={{ minHeight: '52px', maxHeight: '120px' }}
+                style={{ minHeight: "52px", maxHeight: "120px" }}
                 onInput={(e) => {
-                  e.target.style.height = 'auto';
-                  e.target.style.height = e.target.scrollHeight + 'px';
+                  e.target.style.height = "auto";
+                  e.target.style.height = e.target.scrollHeight + "px";
                 }}
               />
             </div>
 
             <button
               onClick={handleSendMessage}
-              disabled={sending || (!messageBody.trim() && attachments.length === 0)}
+              disabled={
+                sending || (!messageBody.trim() && attachments.length === 0)
+              }
               className="p-3.5 bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white rounded-2xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0 shadow-lg hover:shadow-xl active:scale-95"
             >
               {sending ? (

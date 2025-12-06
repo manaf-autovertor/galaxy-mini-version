@@ -53,7 +53,11 @@ function Login() {
         {/* Logo/Header */}
         <div className="text-center mb-8">
           <div className="w-24 h-24 bg-white rounded-3xl mx-auto mb-4 flex items-center justify-center shadow-xl p-4">
-            <img src="/logo_dark.png" alt="Galaxy Logo" className="w-full h-full object-contain" />
+            <img
+              src="/logo_dark.png"
+              alt="Galaxy Logo"
+              className="w-full h-full object-contain"
+            />
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Galaxy</h1>
           <p className="text-gray-600">Sign in to continue</p>
