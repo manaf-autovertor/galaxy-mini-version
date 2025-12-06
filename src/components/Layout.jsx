@@ -4,8 +4,11 @@ import BottomNav from "./BottomNav";
 function Layout() {
   const location = useLocation();
 
-  // Don't show bottom nav on login page
-  const hideBottomNav = location.pathname === "/login";
+  // Don't show bottom nav on login, query list, and chat window pages
+  const hideBottomNav =
+    location.pathname === "/login" ||
+    location.pathname === "/queries" ||
+    location.pathname.startsWith("/chat/");
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
