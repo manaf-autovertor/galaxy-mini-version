@@ -7,6 +7,8 @@ import {
 import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./store/authStore";
 import Layout from "./components/Layout";
+import InstallPrompt from "./components/InstallPrompt";
+import OfflineIndicator from "./components/OfflineIndicator";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import QueryList from "./pages/QueryList";
@@ -23,6 +25,8 @@ function ProtectedRoute({ children }) {
 function App() {
   return (
     <>
+      <OfflineIndicator />
+      <InstallPrompt />
       <Router>
         <Routes>
           <Route path="/login" element={<Login />} />

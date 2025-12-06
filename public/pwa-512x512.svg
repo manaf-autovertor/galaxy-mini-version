@@ -1,0 +1,42 @@
+<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7c2d12;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#ea580c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fb923c;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#f97316;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#grad1)"/>
+  
+  <!-- Central star/sun -->
+  <circle cx="256" cy="256" r="64" fill="url(#glow)"/>
+  <circle cx="256" cy="256" r="42" fill="#fbbf24"/>
+  
+  <!-- Orbit rings -->
+  <circle cx="256" cy="256" r="134" stroke="#fed7aa" stroke-width="4" fill="none" opacity="0.5"/>
+  <circle cx="256" cy="256" r="100" stroke="#fed7aa" stroke-width="3" fill="none" opacity="0.4"/>
+  
+  <!-- Planets -->
+  <circle cx="390" cy="256" r="16" fill="#fcd34d"/>
+  <circle cx="122" cy="256" r="12" fill="#fb923c"/>
+  <circle cx="256" cy="156" r="10" fill="#fdba74"/>
+  
+  <!-- Small stars scattered -->
+  <circle cx="140" cy="140" r="6" fill="#fef3c7" opacity="0.9"/>
+  <circle cx="380" cy="370" r="5" fill="#fde68a" opacity="0.85"/>
+  <circle cx="110" cy="370" r="6" fill="#fef3c7" opacity="0.9"/>
+  <circle cx="370" cy="140" r="5" fill="#fde68a" opacity="0.85"/>
+  <circle cx="200" cy="100" r="4" fill="#fef3c7" opacity="0.8"/>
+  <circle cx="420" cy="300" r="4" fill="#fde68a" opacity="0.8"/>
+  <circle cx="90" cy="190" r="5" fill="#fef3c7" opacity="0.85"/>
+  <circle cx="160" cy="400" r="4" fill="#fde68a" opacity="0.8"/>
+  
+  <!-- Sparkles -->
+  <path d="M 320 100 L 325 115 L 340 120 L 325 125 L 320 140 L 315 125 L 300 120 L 315 115 Z" fill="#fef3c7" opacity="0.9"/>
+  <path d="M 180 420 L 183 430 L 193 433 L 183 436 L 180 446 L 177 436 L 167 433 L 177 430 Z" fill="#fde68a" opacity="0.85"/>
+  <path d="M 430 200 L 433 208 L 441 211 L 433 214 L 430 222 L 427 214 L 419 211 L 427 208 Z" fill="#fef3c7" opacity="0.85"/>
+</svg>
