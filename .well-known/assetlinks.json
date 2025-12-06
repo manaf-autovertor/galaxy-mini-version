@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.vercel.galaxy_mini.twa",
+      "sha256_cert_fingerprints": [
+        "94:81:DD:2B:18:A6:00:CA:C3:51:6E:E0:07:2B:A1:D0:0C:2F:E0:96:67:4F:14:1F:01:00:43:C9:3A:BF:5C:A0"
+      ]
+    }
+  }
+]
