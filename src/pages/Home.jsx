@@ -111,22 +111,27 @@ function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 pt-2">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 transition-colors duration-300 pt-2">
       {/* Header with Glassmorphism */}
-      <div className="sticky top-0 z-20 backdrop-blur-xl bg-white/80 border-b border-white/20 shadow-lg">
+      <div className="sticky top-0 z-20 backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 border-b border-white/20 dark:border-gray-800 shadow-lg transition-colors duration-300">
         <div className="px-6 py-6 safe-top">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
               <img
                 src="/logo_light.png"
                 alt="Galaxy Logo"
-                className="h-7 w-auto"
+                className="h-7 w-auto dark:hidden"
+              />
+              <img
+                src="/logo_dark.png"
+                alt="Galaxy Logo"
+                className="h-7 w-auto hidden dark:block"
               />
               <div>
                 {/* <h1 className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
                   Galaxy
                 </h1> */}
-                <p className="text-xs text-gray-600">
+                <p className="text-xs text-gray-600 dark:text-gray-400">
                   Welcome, {user?.name?.split(" ")[0]}
                 </p>
               </div>
@@ -145,9 +150,9 @@ function Home() {
               </button>
               <button
                 onClick={() => navigate("/settings")}
-                className="p-3 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all active:scale-95 border border-gray-100"
+                className="p-3 bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all active:scale-95 border border-gray-100 dark:border-gray-700"
               >
-                <Settings className="w-5 h-5 text-gray-700" />
+                <Settings className="w-5 h-5 text-gray-700 dark:text-gray-200" />
               </button>
               <button
                 onClick={handleLogout}
@@ -163,11 +168,11 @@ function Home() {
             {quickStats.map((stat, index) => (
               <div
                 key={index}
-                className="bg-white rounded-2xl p-3 shadow-md border border-gray-100 hover:shadow-lg transition-all"
+                className="bg-white dark:bg-gray-800 rounded-2xl p-3 shadow-md border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-all"
               >
                 <stat.icon className={`w-5 h-5 ${stat.color} mb-2`} />
-                <p className="text-xl font-bold text-gray-900">{stat.value}</p>
-                <p className="text-xs text-gray-500 mt-1">{stat.label}</p>
+                <p className="text-xl font-bold text-gray-900 dark:text-white">{stat.value}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -205,7 +210,7 @@ function Home() {
             <div
               key={item.id}
               onClick={() => navigate(item.route)}
-              className="group relative bg-white rounded-3xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 active:scale-95 cursor-pointer border border-gray-100 overflow-hidden"
+              className="group relative bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 active:scale-95 cursor-pointer border border-gray-100 dark:border-gray-700 overflow-hidden"
               style={{
                 animationDelay: `${index * 100}ms`,
                 animation: "fadeInUp 0.6s ease-out forwards",
@@ -229,15 +234,15 @@ function Home() {
               </div>
 
               {/* Text Content */}
-              <h3 className="text-lg font-bold text-gray-900 mb-1">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
                 {item.title}
               </h3>
-              <p className="text-sm text-gray-500">{item.description}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{item.description}</p>
 
               {/* Hover Arrow */}
               <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
-                  <span className="text-gray-600">→</span>
+                <div className="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center">
+                  <span className="text-gray-600 dark:text-gray-300">→</span>
                 </div>
               </div>
             </div>
@@ -246,7 +251,7 @@ function Home() {
 
         {/* Recent Activity Section */}
         <div className="mt-8">
-          <h3 className="text-xl font-bold text-gray-900 mb-4">
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
             Recent Activity
           </h3>
           <div className="space-y-3">
@@ -269,16 +274,16 @@ function Home() {
             ].map((activity, index) => (
               <div
                 key={index}
-                className="bg-white rounded-2xl p-4 shadow-md border border-gray-100 flex items-center gap-4 hover:shadow-lg transition-all"
+                className="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-md border border-gray-100 dark:border-gray-700 flex items-center gap-4 hover:shadow-lg transition-all"
               >
                 <div
                   className={`w-2 h-2 ${activity.color} rounded-full animate-pulse`}
                 ></div>
                 <div className="flex-1">
-                  <p className="text-sm font-semibold text-gray-900">
+                  <p className="text-sm font-semibold text-gray-900 dark:text-white">
                     {activity.action}
                   </p>
-                  <p className="text-xs text-gray-500">{activity.time}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">{activity.time}</p>
                 </div>
               </div>
             ))}
