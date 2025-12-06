@@ -37,10 +37,10 @@ function BottomNav() {
       {/* Glassmorphism Background */}
       <div className="relative">
         {/* Gradient Glow Effect */}
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-white via-white/50 to-transparent pointer-events-none"></div>
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-white via-white/50 to-transparent dark:from-gray-900 dark:via-gray-900/50 dark:to-transparent pointer-events-none transition-colors duration-300"></div>
 
         {/* Main Nav Bar */}
-        <div className="relative mx-4 mb-4 backdrop-blur-xl bg-white/90 rounded-3xl shadow-2xl border border-white/20">
+        <div className="relative mx-4 mb-4 backdrop-blur-xl bg-white/90 dark:bg-gray-800/90 rounded-3xl shadow-2xl border border-white/20 dark:border-gray-700 transition-colors duration-300">
           <div className="flex items-center justify-around px-2 py-2">
             {navItems.map((item) => {
               if (item.isCenter) {
@@ -72,8 +72,8 @@ function BottomNav() {
                   onClick={() => navigate(item.route)}
                   className={`flex flex-col items-center gap-1 px-4 py-3 rounded-2xl transition-all group ${
                     active
-                      ? "bg-gradient-to-br from-indigo-50 to-purple-50"
-                      : "hover:bg-gray-50"
+                      ? "bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-gray-700 dark:to-gray-700"
+                      : "hover:bg-gray-50 dark:hover:bg-gray-700"
                   }`}
                 >
                   <div
@@ -85,7 +85,7 @@ function BottomNav() {
                       className={`w-6 h-6 transition-colors ${
                         active
                           ? "text-transparent bg-gradient-to-br from-indigo-600 to-purple-600 bg-clip-text"
-                          : "text-gray-500 group-hover:text-gray-700"
+                          : "text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-200"
                       }`}
                       strokeWidth={active ? 2.5 : 2}
                       style={
@@ -105,7 +105,7 @@ function BottomNav() {
                     className={`text-xs font-semibold transition-all ${
                       active
                         ? "text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text"
-                        : "text-gray-500 group-hover:text-gray-700"
+                        : "text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-200"
                     }`}
                   >
                     {item.label}

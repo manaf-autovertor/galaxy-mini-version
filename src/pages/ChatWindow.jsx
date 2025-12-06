@@ -217,9 +217,9 @@ function ChatWindow() {
   }
 
   return (
-    <div className="h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex flex-col overflow-hidden">
+    <div className="h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 transition-colors duration-300 flex flex-col overflow-hidden">
       {/* Header */}
-      <div className="flex-shrink-0 z-20 backdrop-blur-xl bg-white/80 border-b border-white/20 shadow-lg safe-top">
+      <div className="flex-shrink-0 z-20 backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 border-b border-white/20 dark:border-gray-800 shadow-lg safe-top transition-colors duration-300">
         <div className="px-6 py-5">
           <div className="flex items-center gap-4 mb-4">
             <button
@@ -232,22 +232,22 @@ function ChatWindow() {
               <h2 className="font-bold text-xl bg-gradient-to-r from-orange-500 to-amber-600 bg-clip-text text-transparent">
                 {selectedQuery?.query_reference || `Query #${queryId}`}
               </h2>
-              <p className="text-xs text-gray-600 mt-1 font-medium">
+              <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 font-medium">
                 {selectedQuery?.query_category} •{" "}
                 {selectedQuery?.query_subcategory}
               </p>
             </div>
             <button
               onClick={() => setShowDetails(!showDetails)}
-              className="p-2.5 bg-white hover:bg-gray-50 rounded-2xl shadow-md hover:shadow-lg transition-all active:scale-95 border border-gray-200"
+              className="p-2.5 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-2xl shadow-md hover:shadow-lg transition-all active:scale-95 border border-gray-200 dark:border-gray-700"
             >
-              <Users className="w-5 h-5 text-gray-700" />
+              <Users className="w-5 h-5 text-gray-700 dark:text-gray-200" />
             </button>
             <button
               onClick={() => setShowActions(!showActions)}
-              className="p-2.5 bg-white hover:bg-gray-50 rounded-2xl shadow-md hover:shadow-lg transition-all active:scale-95 border border-gray-200"
+              className="p-2.5 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-2xl shadow-md hover:shadow-lg transition-all active:scale-95 border border-gray-200 dark:border-gray-700"
             >
-              <MoreVertical className="w-5 h-5 text-gray-700" />
+              <MoreVertical className="w-5 h-5 text-gray-700 dark:text-gray-200" />
             </button>
           </div>
 
@@ -270,28 +270,28 @@ function ChatWindow() {
 
         {/* Details Dropdown */}
         {showDetails && (
-          <div className="bg-gradient-to-br from-white to-gray-50 text-gray-900 px-6 py-4 border-t border-gray-200 text-sm space-y-3 shadow-inner">
-            <div className="flex justify-between items-center p-3 bg-white rounded-2xl shadow-sm">
-              <span className="text-gray-600 font-medium">Application ID:</span>
-              <span className="font-bold text-gray-900">
+          <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 text-gray-900 dark:text-gray-100 px-6 py-4 border-t border-gray-200 dark:border-gray-700 text-sm space-y-3 shadow-inner">
+            <div className="flex justify-between items-center p-3 bg-white dark:bg-gray-700 rounded-2xl shadow-sm">
+              <span className="text-gray-600 dark:text-gray-300 font-medium">Application ID:</span>
+              <span className="font-bold text-gray-900 dark:text-white">
                 {selectedQuery?.application_id}
               </span>
             </div>
-            <div className="flex justify-between items-center p-3 bg-white rounded-2xl shadow-sm">
-              <span className="text-gray-600 font-medium">Type:</span>
-              <span className="font-bold text-gray-900">
+            <div className="flex justify-between items-center p-3 bg-white dark:bg-gray-700 rounded-2xl shadow-sm">
+              <span className="text-gray-600 dark:text-gray-300 font-medium">Type:</span>
+              <span className="font-bold text-gray-900 dark:text-white">
                 {selectedQuery?.query_type}
               </span>
             </div>
-            <div className="flex justify-between items-center p-3 bg-white rounded-2xl shadow-sm">
-              <span className="text-gray-600 font-medium">Subcategory:</span>
-              <span className="font-bold text-gray-900">
+            <div className="flex justify-between items-center p-3 bg-white dark:bg-gray-700 rounded-2xl shadow-sm">
+              <span className="text-gray-600 dark:text-gray-300 font-medium">Subcategory:</span>
+              <span className="font-bold text-gray-900 dark:text-white">
                 {selectedQuery?.query_subcategory}
               </span>
             </div>
-            <div className="flex justify-between items-center p-3 bg-white rounded-2xl shadow-sm">
-              <span className="text-gray-600 font-medium">Created:</span>
-              <span className="font-bold text-gray-900">
+            <div className="flex justify-between items-center p-3 bg-white dark:bg-gray-700 rounded-2xl shadow-sm">
+              <span className="text-gray-600 dark:text-gray-300 font-medium">Created:</span>
+              <span className="font-bold text-gray-900 dark:text-white">
                 {format(
                   new Date(selectedQuery?.created_at),
                   "MMM dd, yyyy HH:mm"
@@ -303,7 +303,7 @@ function ChatWindow() {
 
         {/* Actions Dropdown */}
         {showActions && (
-          <div className="bg-gradient-to-br from-white to-gray-50 px-6 py-3 border-t border-gray-200 shadow-inner">
+          <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 px-6 py-3 border-t border-gray-200 dark:border-gray-700 shadow-inner">
             {canInteract && (
               <button
                 onClick={handleCloseQuery}
@@ -325,8 +325,8 @@ function ChatWindow() {
               <div className="w-20 h-20 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-3xl flex items-center justify-center mx-auto mb-4">
                 <FileText className="w-10 h-10 text-indigo-600" />
               </div>
-              <p className="text-gray-900 font-bold text-lg">No messages yet</p>
-              <p className="text-sm text-gray-500 mt-2">
+              <p className="text-gray-900 dark:text-white font-bold text-lg">No messages yet</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
                 Start the conversation
               </p>
             </div>
@@ -343,7 +343,7 @@ function ChatWindow() {
               <div key={message.id}>
                 {showDateDivider && (
                   <div className="flex items-center justify-center my-6">
-                    <span className="px-4 py-2 bg-white text-gray-700 text-xs font-bold rounded-2xl shadow-md border border-gray-200">
+                    <span className="px-4 py-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs font-bold rounded-2xl shadow-md border border-gray-200 dark:border-gray-700">
                       {format(new Date(message.created_at), "MMMM dd, yyyy")}
                     </span>
                   </div>
@@ -364,7 +364,7 @@ function ChatWindow() {
                         <div className="w-6 h-6 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center shadow-md">
                           <User className="w-3.5 h-3.5 text-white" />
                         </div>
-                        <span className="text-xs text-gray-700 font-bold">
+                        <span className="text-xs text-gray-700 dark:text-gray-300 font-bold">
                           {message.user?.name}
                         </span>
                       </div>
@@ -374,7 +374,7 @@ function ChatWindow() {
                       className={`rounded-3xl px-5 py-3.5 shadow-lg ${
                         isOwnMessage
                           ? "bg-gradient-to-br from-orange-500 to-amber-600 text-white rounded-br-lg"
-                          : "bg-white text-gray-900 rounded-bl-lg border border-gray-100"
+                          : "bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-bl-lg border border-gray-100 dark:border-gray-600"
                       }`}
                     >
                       <div
@@ -405,7 +405,7 @@ function ChatWindow() {
 
                     <span
                       className={`text-xs mt-1 px-1 ${
-                        isOwnMessage ? "text-gray-600" : "text-gray-500"
+                        isOwnMessage ? "text-gray-600 dark:text-gray-400" : "text-gray-500 dark:text-gray-400"
                       }`}
                     >
                       {formatMessageDate(message.created_at)}
@@ -421,24 +421,24 @@ function ChatWindow() {
 
       {/* Input Area */}
       {canInteract ? (
-        <div className="flex-shrink-0 backdrop-blur-xl bg-white/90 border-t border-gray-200 px-6 py-4 shadow-lg safe-bottom">
+        <div className="flex-shrink-0 backdrop-blur-xl bg-white/90 dark:bg-gray-900/90 border-t border-gray-200 dark:border-gray-800 px-6 py-4 shadow-lg safe-bottom transition-colors duration-300">
           {/* Attachments Preview */}
           {attachments.length > 0 && (
             <div className="mb-4 flex flex-wrap gap-2">
               {attachments.map((file, index) => (
                 <div
                   key={index}
-                  className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl text-sm shadow-md border border-indigo-100"
+                  className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-gray-700 dark:to-gray-800 rounded-2xl text-sm shadow-md border border-indigo-100 dark:border-gray-600"
                 >
-                  <FileText className="w-4 h-4 text-indigo-600" />
-                  <span className="text-gray-700 font-medium max-w-[150px] truncate">
+                  <FileText className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                  <span className="text-gray-700 dark:text-gray-200 font-medium max-w-[150px] truncate">
                     {file.name}
                   </span>
                   <button
                     onClick={() => removeAttachment(index)}
-                    className="p-1 hover:bg-white rounded-full transition-colors"
+                    className="p-1 hover:bg-white dark:hover:bg-gray-600 rounded-full transition-colors"
                   >
-                    <X className="w-3.5 h-3.5 text-gray-500" />
+                    <X className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" />
                   </button>
                 </div>
               ))}
@@ -456,7 +456,6 @@ function ChatWindow() {
 
             <input
               ref={fileInputRef}
-              type="file"
               multiple
               onChange={handleFileSelect}
               className="hidden"
@@ -468,7 +467,7 @@ function ChatWindow() {
                 onChange={(e) => setMessageBody(e.target.value)}
                 placeholder="Type a message..."
                 rows={1}
-                className="w-full px-5 py-3.5 bg-white rounded-3xl resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-gray-900 shadow-md border border-gray-200"
+                className="w-full px-5 py-3.5 bg-white dark:bg-gray-800 rounded-3xl resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-gray-900 dark:text-white shadow-md border border-gray-200 dark:border-gray-700 placeholder-gray-400 dark:placeholder-gray-500"
                 style={{ minHeight: "52px", maxHeight: "120px" }}
                 onInput={(e) => {
                   e.target.style.height = "auto";
@@ -493,10 +492,10 @@ function ChatWindow() {
           </div>
         </div>
       ) : (
-        <div className="flex-shrink-0 backdrop-blur-xl bg-gradient-to-br from-red-50 to-rose-50 border-t border-red-200 px-6 py-5 text-center shadow-lg safe-bottom">
-          <div className="inline-flex items-center gap-2 px-5 py-3 bg-white rounded-2xl shadow-md border border-red-200">
+        <div className="flex-shrink-0 backdrop-blur-xl bg-gradient-to-br from-red-50 to-rose-50 dark:from-red-900/20 dark:to-rose-900/20 border-t border-red-200 dark:border-red-800 px-6 py-5 text-center shadow-lg safe-bottom">
+          <div className="inline-flex items-center gap-2 px-5 py-3 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-red-200 dark:border-red-800">
             <XCircle className="w-5 h-5 text-red-500" />
-            <p className="text-gray-700 text-sm font-bold">
+            <p className="text-gray-700 dark:text-gray-300 text-sm font-bold">
               This query is closed. You cannot send new messages.
             </p>
           </div>

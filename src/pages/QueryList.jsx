@@ -162,9 +162,9 @@ function QueryList() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 transition-colors duration-300 flex flex-col">
       {/* Header */}
-      <div className="sticky top-0 z-20 backdrop-blur-xl bg-white/80 border-b border-white/20 shadow-lg safe-top">
+      <div className="sticky top-0 z-20 backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 border-b border-white/20 dark:border-gray-800 shadow-lg safe-top transition-colors duration-300">
         <div className="px-6 py-4">
           <div className="flex items-center gap-4 mb-3">
             <button
@@ -177,7 +177,7 @@ function QueryList() {
               <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-amber-600 bg-clip-text text-transparent">
                 Queries
               </h1>
-              <p className="text-xs text-gray-600">Manage your queries</p>
+              <p className="text-xs text-gray-600 dark:text-gray-400">Manage your queries</p>
             </div>
           </div>
 
@@ -189,7 +189,7 @@ function QueryList() {
               placeholder="Search queries..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-2.5 bg-white rounded-2xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 shadow-md border border-gray-100"
+              className="w-full pl-12 pr-4 py-2.5 bg-white dark:bg-gray-800 rounded-2xl text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 shadow-md border border-gray-100 dark:border-gray-700 transition-colors duration-200"
             />
           </div>
         </div>
@@ -204,7 +204,7 @@ function QueryList() {
             className={`flex-1 py-3 px-4 font-bold rounded-2xl transition-all shadow-lg ${
               mainTab === "raised_to_you"
                 ? "bg-gradient-to-br from-orange-500 to-amber-600 text-white shadow-orange-500/50"
-                : "bg-white text-gray-600 hover:shadow-xl border border-gray-200"
+                : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:shadow-xl border border-gray-200 dark:border-gray-700"
             }`}
           >
             <span className="flex items-center justify-center gap-2 text-sm">
@@ -224,7 +224,7 @@ function QueryList() {
             className={`flex-1 py-3 px-4 font-bold rounded-2xl transition-all shadow-lg ${
               mainTab === "raised_by_you"
                 ? "bg-gradient-to-br from-orange-500 to-amber-600 text-white shadow-orange-500/50"
-                : "bg-white text-gray-600 hover:shadow-xl border border-gray-200"
+                : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:shadow-xl border border-gray-200 dark:border-gray-700"
             }`}
           >
             <span className="flex items-center justify-center gap-2 text-sm">
@@ -240,13 +240,13 @@ function QueryList() {
       </div>
 
       {/* Sub Tabs */}
-      <div className="backdrop-blur-xl bg-white/80 border-b border-white/20 sticky top-[200px] z-10 px-6 py-4 flex gap-2">
+      <div className="backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 border-b border-white/20 dark:border-gray-800 sticky top-[200px] z-10 px-6 py-4 flex gap-2 transition-colors duration-300">
         <button
           onClick={() => setSubTab("pending")}
           className={`px-5 py-2.5 font-semibold text-sm rounded-2xl transition-all ${
             subTab === "pending"
               ? "bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/30"
-              : "bg-white text-gray-600 hover:shadow-md border border-gray-200"
+              : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:shadow-md border border-gray-200 dark:border-gray-700"
           }`}
         >
           Pending{" "}
@@ -258,7 +258,7 @@ function QueryList() {
             className={`px-5 py-2.5 font-semibold text-sm rounded-2xl transition-all ${
               subTab === "reverted"
                 ? "bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/30"
-                : "bg-white text-gray-600 hover:shadow-md border border-gray-200"
+                : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:shadow-md border border-gray-200 dark:border-gray-700"
             }`}
           >
             Reverted{" "}
@@ -270,7 +270,7 @@ function QueryList() {
           className={`px-5 py-2.5 font-semibold text-sm rounded-2xl transition-all ${
             subTab === "closed"
               ? "bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/30"
-              : "bg-white text-gray-600 hover:shadow-md border border-gray-200"
+              : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:shadow-md border border-gray-200 dark:border-gray-700"
           }`}
         >
           Closed
@@ -309,7 +309,7 @@ function QueryList() {
               onClick={() =>
                 navigate(`/chat/${query.parent_query_id || query.id}`)
               }
-              className="group bg-white rounded-3xl p-5 shadow-lg hover:shadow-2xl active:scale-[0.98] transition-all duration-300 cursor-pointer border border-gray-100 relative overflow-hidden"
+              className="group bg-white dark:bg-gray-800 rounded-3xl p-5 shadow-lg hover:shadow-2xl active:scale-[0.98] transition-all duration-300 cursor-pointer border border-gray-100 dark:border-gray-700 relative overflow-hidden"
               style={{
                 animationDelay: `${index * 50}ms`,
                 animation: "fadeInUp 0.5s ease-out forwards",
@@ -320,7 +320,7 @@ function QueryList() {
               <div className="relative flex items-start justify-between mb-3">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="font-bold text-gray-900 text-base">
+                    <span className="font-bold text-gray-900 dark:text-white text-base">
                       {query.query_reference || `Query #${query.id}`}
                     </span>
                     {query.is_priority && (
@@ -329,7 +329,7 @@ function QueryList() {
                       </span>
                     )}
                   </div>
-                  <p className="text-xs text-gray-600 font-medium">
+                  <p className="text-xs text-gray-600 dark:text-gray-400 font-medium">
                     {query.query_category} • {query.query_subcategory}
                   </p>
                 </div>
@@ -343,11 +343,11 @@ function QueryList() {
                 </div>
               </div>
 
-              <p className="relative text-sm text-gray-700 line-clamp-2 mb-4 leading-relaxed">
+              <p className="relative text-sm text-gray-700 dark:text-gray-300 line-clamp-2 mb-4 leading-relaxed">
                 {query.message || "No message"}
               </p>
 
-              <div className="relative flex items-center justify-between text-xs text-gray-500 font-medium">
+              <div className="relative flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 font-medium">
                 <span className="flex items-center gap-1">
                   <span className="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>
                   App ID: {query.application_id}
@@ -358,7 +358,7 @@ function QueryList() {
               </div>
 
               {query.unread_count > 0 && (
-                <div className="relative mt-3 pt-3 border-t border-gray-100">
+                <div className="relative mt-3 pt-3 border-t border-gray-100 dark:border-gray-700">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white text-xs font-bold rounded-full shadow-lg animate-pulse">
                     <span className="w-2 h-2 bg-white rounded-full"></span>
                     {query.unread_count} new message
