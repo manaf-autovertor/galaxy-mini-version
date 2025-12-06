@@ -13,6 +13,7 @@ import QueryList from "./pages/QueryList";
 import ChatWindow from "./pages/ChatWindow";
 import PlaceholderPage from "./pages/PlaceholderPage";
 import Profile from "./pages/Profile";
+import AIAssistant from "./pages/AIAssistant";
 
 function ProtectedRoute({ children }) {
   const token = useAuthStore((state) => state.token);
@@ -34,6 +35,7 @@ function App() {
           >
             <Route path="/" element={<Navigate to="/home" replace />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/ai-assistant" element={<AIAssistant />} />
             <Route path="/queries" element={<QueryList />} />
             <Route path="/chat/:queryId" element={<ChatWindow />} />
             <Route

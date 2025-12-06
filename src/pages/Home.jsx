@@ -190,7 +190,10 @@ function Home() {
                 Need help? Ask me anything!
               </p>
             </div>
-            <button className="px-6 py-3 bg-white text-purple-600 rounded-2xl font-semibold shadow-xl hover:shadow-2xl transition-all active:scale-95">
+            <button
+              onClick={() => navigate("/ai-assistant")}
+              className="px-6 py-3 bg-white text-purple-600 rounded-2xl font-semibold shadow-xl hover:shadow-2xl transition-all active:scale-95"
+            >
               Chat
             </button>
           </div>
