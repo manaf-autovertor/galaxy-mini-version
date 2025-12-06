@@ -1,52 +1,26 @@
 {
   "name": "Galaxy Mobile App",
-  "short_name": "GalaxyApp",
+  "short_name": "Galaxy",
   "description": "Galaxy LOS management application with AI assistant",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#8b5cf6",
+  "theme_color": "#f97316",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "/pwa-192x192.svg",
+      "src": "/pwa-192x192.png",
       "sizes": "192x192",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "/pwa-512x512.svg",
+      "src": "/pwa-512x512.png",
       "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "type": "image/png",
+      "purpose": "any"
     }
   ],
-  "categories": ["productivity", "business"],
-  "screenshots": [],
-  "shortcuts": [
-    {
-      "name": "Queries",
-      "short_name": "Queries",
-      "description": "View all queries",
-      "url": "/queries",
-      "icons": [
-        {
-          "src": "/pwa-192x192.png",
-          "sizes": "192x192"
-        }
-      ]
-    },
-    {
-      "name": "AI Assistant",
-      "short_name": "AI",
-      "description": "Chat with AI",
-      "url": "/ai-assistant",
-      "icons": [
-        {
-          "src": "/pwa-192x192.png",
-          "sizes": "192x192"
-        }
-      ]
-    }
-  ]
+  "categories": ["productivity", "business"]
 }
