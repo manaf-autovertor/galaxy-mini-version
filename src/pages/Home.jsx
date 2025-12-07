@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
+import { useQueryStore } from "../store/queryStore";
 import { authService } from "../services/authService";
+import { queryService } from "../services/queryService";
 import { disconnectEcho } from "../services/echoService";
 import {
   FileText,
@@ -23,7 +25,22 @@ function Home() {
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
+  const counts = useQueryStore((state) => state.counts);
+  const setCounts = useQueryStore((state) => state.setCounts);
   const [activeNotifications] = useState(3);
+
+  useEffect(() => {
+    loadCounts();
+  }, []);
+
+  const loadCounts = async () => {
+    try {
+      const data = await queryService.getQueryCounts();
+      setCounts(data);
+    } catch (error) {
+      console.error("Failed to load counts:", error);
+    }
+  };
 
   const handleLogout = async () => {
     try {
@@ -54,7 +71,7 @@ function Home() {
       icon: MessageSquareText,
       gradient: "from-orange-500 to-amber-500",
       route: "/queries",
-      count: null,
+      count: counts.raised_to_you?.pending || 0,
     },
     {
       id: "deviations",
@@ -171,8 +188,12 @@ function Home() {
                 className="bg-white dark:bg-gray-800 rounded-2xl p-3 shadow-md border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-all"
               >
                 <stat.icon className={`w-5 h-5 ${stat.color} mb-2`} />
-                <p className="text-xl font-bold text-gray-900 dark:text-white">{stat.value}</p>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{stat.label}</p>
+                <p className="text-xl font-bold text-gray-900 dark:text-white">
+                  {stat.value}
+                </p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  {stat.label}
+                </p>
               </div>
             ))}
           </div>
@@ -227,7 +248,7 @@ function Home() {
               >
                 <item.icon className="w-8 h-8 text-white" />
                 {item.count && (
-                  <span className="absolute -top-2 -right-2 w-7 h-7 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-bold shadow-lg">
+                  <span className="absolute -top-2 -right-2 w-7 h-7 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-bold shadow-lg animate-pulse">
                     {item.count}
                   </span>
                 )}
@@ -237,7 +258,9 @@ function Home() {
               <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
                 {item.title}
               </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">{item.description}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {item.description}
+              </p>
 
               {/* Hover Arrow */}
               <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -283,7 +306,9 @@ function Home() {
                   <p className="text-sm font-semibold text-gray-900 dark:text-white">
                     {activity.action}
                   </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">{activity.time}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    {activity.time}
+                  </p>
                 </div>
               </div>
             ))}

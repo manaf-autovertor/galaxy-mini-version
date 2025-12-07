@@ -165,7 +165,7 @@ function QueryList() {
               setMainTab("raised_to_you");
               setSubTab("pending");
             }}
-            className={`flex-1 py-3 px-4 font-bold rounded-2xl transition-all shadow-lg ${
+            className={`relative flex-1 py-3 px-4 font-bold rounded-2xl transition-all shadow-lg ${
               mainTab === "raised_to_you"
                 ? "bg-gradient-to-br from-orange-500 to-amber-600 text-white shadow-orange-500/50"
                 : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:shadow-xl border border-gray-200 dark:border-gray-700"
@@ -173,19 +173,19 @@ function QueryList() {
           >
             <span className="flex items-center justify-center gap-2 text-sm">
               Raised to You
-              {counts.raised_to_you.pending > 0 && (
-                <span className="px-2 py-0.5 text-xs bg-white/20 backdrop-blur-sm text-white rounded-full font-bold">
-                  {counts.raised_to_you.pending}
-                </span>
-              )}
             </span>
+            {counts.raised_to_you.pending > 0 && (
+              <span className="absolute -top-2 -right-2 min-w-[22px] h-5.5 px-1.5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-bold shadow-lg">
+                {counts.raised_to_you.pending}
+              </span>
+            )}
           </button>
           <button
             onClick={() => {
               setMainTab("raised_by_you");
               setSubTab("pending");
             }}
-            className={`flex-1 py-3 px-4 font-bold rounded-2xl transition-all shadow-lg ${
+            className={`relative flex-1 py-3 px-4 font-bold rounded-2xl transition-all shadow-lg ${
               mainTab === "raised_by_you"
                 ? "bg-gradient-to-br from-orange-500 to-amber-600 text-white shadow-orange-500/50"
                 : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:shadow-xl border border-gray-200 dark:border-gray-700"
@@ -193,12 +193,12 @@ function QueryList() {
           >
             <span className="flex items-center justify-center gap-2 text-sm">
               Raised by You
-              {counts.raised_by_you.pending > 0 && (
-                <span className="px-2 py-0.5 text-xs bg-white/20 backdrop-blur-sm text-white rounded-full font-bold">
-                  {counts.raised_by_you.pending}
-                </span>
-              )}
             </span>
+            {counts.raised_by_you.pending > 0 && (
+              <span className="absolute -top-2 -right-2 min-w-[22px] h-5.5 px-1.5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-bold shadow-lg">
+                {counts.raised_by_you.pending}
+              </span>
+            )}
           </button>
         </div>
       </div>
@@ -207,37 +207,50 @@ function QueryList() {
       <div className="backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 border-b border-white/20 dark:border-gray-800 sticky top-[200px] z-10 px-6 py-4 flex gap-2 transition-colors duration-300">
         <button
           onClick={() => setSubTab("pending")}
-          className={`px-5 py-2.5 font-semibold text-sm rounded-2xl transition-all ${
+          className={`relative px-5 py-2.5 font-semibold text-sm rounded-2xl transition-all ${
             subTab === "pending"
               ? "bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/30"
               : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:shadow-md border border-gray-200 dark:border-gray-700"
           }`}
         >
-          Pending{" "}
-          {counts[mainTab]?.pending > 0 && `(${counts[mainTab].pending})`}
+          Pending
+          {counts[mainTab]?.pending > 0 && (
+            <span className="absolute -top-2 -right-2 min-w-[20px] h-5 px-1.5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-bold shadow-lg">
+              {counts[mainTab].pending}
+            </span>
+          )}
         </button>
         {mainTab !== "all" && (
           <button
             onClick={() => setSubTab("reverted")}
-            className={`px-5 py-2.5 font-semibold text-sm rounded-2xl transition-all ${
+            className={`relative px-5 py-2.5 font-semibold text-sm rounded-2xl transition-all ${
               subTab === "reverted"
                 ? "bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/30"
                 : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:shadow-md border border-gray-200 dark:border-gray-700"
             }`}
           >
-            Reverted{" "}
-            {counts[mainTab]?.reverted > 0 && `(${counts[mainTab].reverted})`}
+            Reverted
+            {counts[mainTab]?.reverted > 0 && (
+              <span className="absolute -top-2 -right-2 min-w-[20px] h-5 px-1.5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-bold shadow-lg">
+                {counts[mainTab].reverted}
+              </span>
+            )}
           </button>
         )}
         <button
           onClick={() => setSubTab("closed")}
-          className={`px-5 py-2.5 font-semibold text-sm rounded-2xl transition-all ${
+          className={`relative px-5 py-2.5 font-semibold text-sm rounded-2xl transition-all ${
             subTab === "closed"
               ? "bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/30"
               : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:shadow-md border border-gray-200 dark:border-gray-700"
           }`}
         >
           Closed
+          {counts[mainTab]?.closed > 0 && (
+            <span className="absolute -top-2 -right-2 min-w-[20px] h-5 px-1.5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-bold shadow-lg">
+              {counts[mainTab].closed}
+            </span>
+          )}
         </button>
       </div>
 

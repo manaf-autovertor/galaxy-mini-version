@@ -1,4 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
+import { useQueryStore } from "../store/queryStore";
 import {
   Home,
   FileText,
@@ -10,6 +11,7 @@ import {
 function BottomNav() {
   const navigate = useNavigate();
   const location = useLocation();
+  const counts = useQueryStore((state) => state.counts);
 
   const navItems = [
     { id: "home", icon: Home, label: "Home", route: "/home" },
@@ -56,6 +58,11 @@ function BottomNav() {
                         className="w-8 h-8 text-white"
                         strokeWidth={2.5}
                       />
+                      {counts.raised_to_you?.pending > 0 && (
+                        <span className="absolute -top-1 -right-1 min-w-[22px] h-7 px-1.5 bg-red-700 text-white text-xs rounded-full flex items-center justify-center font-bold shadow-lg animate-pulse border-2 border-white">
+                          {counts.raised_to_you.pending}
+                        </span>
+                      )}
                     </div>
 
                     {/* Ripple Effect */}
