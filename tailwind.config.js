@@ -1,18 +1,15 @@
 /** @type {import('tailwindcss').Config} */
-export default {
-  darkMode: 'media',
+module.exports = {
   content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    "./App.{js,jsx,ts,tsx}",
+    "./src/**/*.{js,jsx,ts,tsx}"
   ],
-  darkMode: 'class', // Prevents automatic dark mode based on system preference
+  presets: [require("nativewind/preset")],
   theme: {
     extend: {
-      fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-      },
       colors: {
         primary: {
+          DEFAULT: '#f97316',
           50: '#fff7ed',
           100: '#ffedd5',
           200: '#fed7aa',
@@ -28,4 +25,4 @@ export default {
     },
   },
   plugins: [],
-};
+}

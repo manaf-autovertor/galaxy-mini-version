@@ -1,28 +1,24 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  SafeAreaView,
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import { useAuthStore } from "../store/authStore";
 import { useQueryStore } from "../store/queryStore";
 import { authService } from "../services/authService";
 import { queryService } from "../services/queryService";
 import { disconnectEcho } from "../services/echoService";
-import {
-  FileText,
-  MessageSquareText,
-  GitBranch,
-  FileCheck,
-  TrendingUp,
-  Users,
-  Bell,
-  Settings,
-  Sparkles,
-  Zap,
-  Target,
-  BarChart3,
-  LogOut,
-} from "lucide-react";
 
 function Home() {
-  const navigate = useNavigate();
+  const navigation = useNavigation();
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
   const counts = useQueryStore((state) => state.counts);
@@ -50,7 +46,6 @@ function Home() {
     } finally {
       disconnectEcho();
       logout();
-      navigate("/login");
     }
   };
 
@@ -59,277 +54,487 @@ function Home() {
       id: "applications",
       title: "Applications",
       description: "View & manage applications",
-      icon: FileText,
-      gradient: "from-blue-500 to-cyan-500",
-      route: "/applications",
-      count: null,
+      icon: "document-text",
+      colors: ["#3b82f6", "#06b6d4"],
+      route: "Applications",
     },
     {
       id: "queries",
       title: "Queries",
       description: "Handle customer queries",
-      icon: MessageSquareText,
-      gradient: "from-orange-500 to-amber-500",
-      route: "/queries",
+      icon: "chatbubbles",
+      colors: ["#f97316", "#d97706"],
+      route: "Queries",
       count: counts.raised_to_you?.pending || 0,
     },
     {
       id: "deviations",
       title: "Deviations",
       description: "Review deviations",
-      icon: GitBranch,
-      gradient: "from-purple-500 to-pink-500",
-      route: "/deviations",
-      count: null,
+      icon: "git-branch",
+      colors: ["#a855f7", "#ec4899"],
+      route: "Deviations",
     },
     {
       id: "requests",
       title: "Requests",
       description: "Pending requests",
-      icon: FileCheck,
-      gradient: "from-green-500 to-emerald-500",
-      route: "/requests",
-      count: null,
+      icon: "checkmark-done",
+      colors: ["#22c55e", "#10b981"],
+      route: "Requests",
     },
     {
       id: "analytics",
       title: "Analytics",
       description: "Performance insights",
-      icon: TrendingUp,
-      gradient: "from-indigo-500 to-blue-500",
-      route: "/analytics",
-      count: null,
+      icon: "trending-up",
+      colors: ["#6366f1", "#3b82f6"],
+      route: "Analytics",
     },
     {
       id: "team",
       title: "Team",
       description: "Manage your team",
-      icon: Users,
-      gradient: "from-rose-500 to-red-500",
-      route: "/team",
-      count: null,
+      icon: "people",
+      colors: ["#f43f5e", "#ef4444"],
+      route: "Team",
     },
   ];
 
   const quickStats = [
-    {
-      label: "Today's Tasks",
-      value: "0",
-      icon: Target,
-      color: "text-blue-500",
-    },
+    { label: "Today's Tasks", value: "0", icon: "target", color: "#3b82f6" },
     {
       label: "Completion Rate",
       value: "3%",
-      icon: BarChart3,
-      color: "text-green-500",
+      icon: "bar-chart",
+      color: "#22c55e",
     },
-    { label: "Active Cases", value: "0", icon: Zap, color: "text-orange-500" },
+    { label: "Active Cases", value: "0", icon: "flash", color: "#f97316" },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 transition-colors duration-300 pt-2">
-      {/* Header with Glassmorphism */}
-      <div className="sticky top-0 z-20 backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 border-b border-white/20 dark:border-gray-800 shadow-lg transition-colors duration-300">
-        <div className="px-6 py-6 safe-top">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <img
-                src="/logo_light.png"
-                alt="Galaxy Logo"
-                className="h-7 w-auto dark:hidden"
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+        {/* Header */}
+        <View style={styles.header}>
+          <View style={styles.headerTop}>
+            <View style={styles.logoSection}>
+              <Image
+                source={require("../../assets/icon.png")}
+                style={styles.logo}
+                resizeMode="contain"
               />
-              <img
-                src="/logo_dark.png"
-                alt="Galaxy Logo"
-                className="h-7 w-auto hidden dark:block"
-              />
-              <div>
-                {/* <h1 className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                  Galaxy
-                </h1> */}
-                <p className="text-xs text-gray-600 dark:text-gray-400">
-                  Welcome, {user?.name?.split(" ")[0]}
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => navigate("/notifications")}
-                className="relative p-3 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-2xl shadow-lg hover:shadow-xl transition-all active:scale-95"
+              <Text style={styles.welcomeText}>
+                Welcome, {user?.name?.split(" ")[0]}
+              </Text>
+            </View>
+            <View style={styles.headerButtons}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Notifications")}
+                style={styles.notificationButton}
               >
-                <Bell className="w-5 h-5 text-white" />
-                {activeNotifications > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-bold animate-pulse">
-                    {activeNotifications}
-                  </span>
-                )}
-              </button>
-              <button
-                onClick={() => navigate("/settings")}
-                className="p-3 bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all active:scale-95 border border-gray-100 dark:border-gray-700"
-              >
-                <Settings className="w-5 h-5 text-gray-700 dark:text-gray-200" />
-              </button>
-              <button
-                onClick={handleLogout}
-                className="p-3 bg-gradient-to-br from-red-500 to-rose-500 hover:from-red-600 hover:to-rose-600 rounded-2xl shadow-lg hover:shadow-xl transition-all active:scale-95"
-              >
-                <LogOut className="w-5 h-5 text-white" />
-              </button>
-            </div>
-          </div>
+                <LinearGradient
+                  colors={["#6366f1", "#a855f7"]}
+                  style={styles.gradientButton}
+                >
+                  <Ionicons name="notifications" size={20} color="#fff" />
+                  {activeNotifications > 0 && (
+                    <View style={styles.badge}>
+                      <Text style={styles.badgeText}>
+                        {activeNotifications}
+                      </Text>
+                    </View>
+                  )}
+                </LinearGradient>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
+                <View style={styles.iconButton}>
+                  <Ionicons name="settings" size={20} color="#374151" />
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleLogout}>
+                <LinearGradient
+                  colors={["#ef4444", "#f43f5e"]}
+                  style={styles.gradientButton}
+                >
+                  <Ionicons name="log-out" size={20} color="#fff" />
+                </LinearGradient>
+              </TouchableOpacity>
+            </View>
+          </View>
 
           {/* Quick Stats */}
-          <div className="grid grid-cols-3 gap-3">
+          <View style={styles.statsGrid}>
             {quickStats.map((stat, index) => (
-              <div
-                key={index}
-                className="bg-white dark:bg-gray-800 rounded-2xl p-3 shadow-md border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-all"
-              >
-                <stat.icon className={`w-5 h-5 ${stat.color} mb-2`} />
-                <p className="text-xl font-bold text-gray-900 dark:text-white">
-                  {stat.value}
-                </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                  {stat.label}
-                </p>
-              </div>
+              <View key={index} style={styles.statCard}>
+                <Ionicons name={stat.icon} size={20} color={stat.color} />
+                <Text style={styles.statValue}>{stat.value}</Text>
+                <Text style={styles.statLabel}>{stat.label}</Text>
+              </View>
             ))}
-          </div>
-        </div>
-      </div>
+          </View>
+        </View>
 
-      {/* Main Content */}
-      <div className="px-6 py-6 pb-32">
         {/* AI Assistant Banner */}
-        <div className="mb-6 bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 rounded-3xl p-6 shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -mr-20 -mt-20"></div>
-          <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full -ml-16 -mb-16"></div>
-          <div className="relative z-10 flex items-center justify-between">
-            <div>
-              <div className="flex items-center gap-2 mb-2">
-                <Sparkles className="w-6 h-6 text-yellow-300" />
-                <h3 className="text-white font-bold text-lg">AI Assistant</h3>
-              </div>
-              <p className="text-white/90 text-sm">
-                Need help? Ask me anything!
-              </p>
-            </div>
-            <button
-              onClick={() => navigate("/ai-assistant")}
-              className="px-6 py-3 bg-white text-purple-600 rounded-2xl font-semibold shadow-xl hover:shadow-2xl transition-all active:scale-95"
-            >
-              Chat
-            </button>
-          </div>
-        </div>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("AI Assistant")}
+          activeOpacity={0.9}
+        >
+          <LinearGradient
+            colors={["#8b5cf6", "#a855f7", "#d946ef"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.aiBanner}
+          >
+            <View style={styles.aiBannerContent}>
+              <View>
+                <View style={styles.aiBannerTitle}>
+                  <Ionicons name="sparkles" size={24} color="#fbbf24" />
+                  <Text style={styles.aiBannerTitleText}>AI Assistant</Text>
+                </View>
+                <Text style={styles.aiBannerSubtitle}>
+                  Need help? Ask me anything!
+                </Text>
+              </View>
+              <View style={styles.aiBannerButton}>
+                <Text style={styles.aiBannerButtonText}>Chat</Text>
+              </View>
+            </View>
+          </LinearGradient>
+        </TouchableOpacity>
 
         {/* Menu Grid */}
-        <div className="grid grid-cols-2 gap-4">
-          {menuItems.map((item, index) => (
-            <div
+        <View style={styles.menuGrid}>
+          {menuItems.map((item) => (
+            <TouchableOpacity
               key={item.id}
-              onClick={() => navigate(item.route)}
-              className="group relative bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 active:scale-95 cursor-pointer border border-gray-100 dark:border-gray-700 overflow-hidden"
-              style={{
-                animationDelay: `${index * 100}ms`,
-                animation: "fadeInUp 0.6s ease-out forwards",
-              }}
+              onPress={() => navigation.navigate(item.route)}
+              activeOpacity={0.7}
+              style={styles.menuCard}
             >
-              {/* Gradient Background Overlay */}
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}
-              ></div>
-
-              {/* Icon Container */}
-              <div
-                className={`relative w-16 h-16 bg-gradient-to-br ${item.gradient} rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:shadow-xl transition-all group-hover:scale-110 duration-300`}
-              >
-                <item.icon className="w-8 h-8 text-white" />
-                {item.count && (
-                  <span className="absolute -top-2 -right-2 w-7 h-7 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-bold shadow-lg animate-pulse">
-                    {item.count}
-                  </span>
+              <LinearGradient colors={item.colors} style={styles.menuIcon}>
+                <Ionicons name={item.icon} size={32} color="#fff" />
+                {item.count > 0 && (
+                  <View style={styles.menuBadge}>
+                    <Text style={styles.menuBadgeText}>{item.count}</Text>
+                  </View>
                 )}
-              </div>
-
-              {/* Text Content */}
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
-                {item.title}
-              </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                {item.description}
-              </p>
-
-              {/* Hover Arrow */}
-              <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                <div className="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center">
-                  <span className="text-gray-600 dark:text-gray-300">→</span>
-                </div>
-              </div>
-            </div>
+              </LinearGradient>
+              <Text style={styles.menuTitle}>{item.title}</Text>
+              <Text style={styles.menuDescription}>{item.description}</Text>
+            </TouchableOpacity>
           ))}
-        </div>
+        </View>
 
-        {/* Recent Activity Section */}
-        <div className="mt-8">
-          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-            Recent Activity
-          </h3>
-          <div className="space-y-3">
-            {[
-              {
-                action: "Query resolved",
-                time: "2 mins ago",
-                color: "bg-green-500",
-              },
-              {
-                action: "New application",
-                time: "15 mins ago",
-                color: "bg-blue-500",
-              },
-              {
-                action: "Deviation approved",
-                time: "1 hour ago",
-                color: "bg-purple-500",
-              },
-            ].map((activity, index) => (
-              <div
-                key={index}
-                className="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-md border border-gray-100 dark:border-gray-700 flex items-center gap-4 hover:shadow-lg transition-all"
-              >
-                <div
-                  className={`w-2 h-2 ${activity.color} rounded-full animate-pulse`}
-                ></div>
-                <div className="flex-1">
-                  <p className="text-sm font-semibold text-gray-900 dark:text-white">
-                    {activity.action}
-                  </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
-                    {activity.time}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <style jsx>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
-    </div>
+        {/* Recent Activity */}
+        <View style={styles.activitySection}>
+          <Text style={styles.sectionTitle}>Recent Activity</Text>
+          {[
+            { action: "Query resolved", time: "2 mins ago", color: "#22c55e" },
+            {
+              action: "New application",
+              time: "15 mins ago",
+              color: "#3b82f6",
+            },
+            {
+              action: "Deviation approved",
+              time: "1 hour ago",
+              color: "#a855f7",
+            },
+          ].map((activity, index) => (
+            <View key={index} style={styles.activityCard}>
+              <View
+                style={[
+                  styles.activityDot,
+                  { backgroundColor: activity.color },
+                ]}
+              />
+              <View style={styles.activityContent}>
+                <Text style={styles.activityAction}>{activity.action}</Text>
+                <Text style={styles.activityTime}>{activity.time}</Text>
+              </View>
+            </View>
+          ))}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f3f4f6",
+  },
+  scrollView: {
+    flex: 1,
+  },
+  header: {
+    backgroundColor: "#fff",
+    paddingTop: 16,
+    paddingHorizontal: 24,
+    paddingBottom: 24,
+    borderBottomWidth: 1,
+    borderBottomColor: "#e5e7eb",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  headerTop: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  logoSection: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+  logo: {
+    width: 28,
+    height: 28,
+  },
+  welcomeText: {
+    fontSize: 12,
+    color: "#6b7280",
+  },
+  headerButtons: {
+    flexDirection: "row",
+    gap: 12,
+  },
+  gradientButton: {
+    width: 48,
+    height: 48,
+    borderRadius: 16,
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  notificationButton: {
+    position: "relative",
+  },
+  badge: {
+    position: "absolute",
+    top: -4,
+    right: -4,
+    backgroundColor: "#ef4444",
+    borderRadius: 10,
+    minWidth: 20,
+    height: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 4,
+  },
+  badgeText: {
+    color: "#fff",
+    fontSize: 10,
+    fontWeight: "700",
+  },
+  iconButton: {
+    width: 48,
+    height: 48,
+    borderRadius: 16,
+    backgroundColor: "#ffffff",
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#e5e7eb",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  statsGrid: {
+    flexDirection: "row",
+    gap: 12,
+  },
+  statCard: {
+    flex: 1,
+    backgroundColor: "#fff",
+    borderRadius: 16,
+    padding: 12,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+    borderWidth: 1,
+    borderColor: "#e5e7eb",
+  },
+  statValue: {
+    fontSize: 20,
+    fontWeight: "700",
+    color: "#1f2937",
+    marginTop: 8,
+  },
+  statLabel: {
+    fontSize: 10,
+    color: "#6b7280",
+    marginTop: 4,
+  },
+  aiBanner: {
+    margin: 24,
+    borderRadius: 24,
+    padding: 24,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+  aiBannerContent: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  aiBannerTitle: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    marginBottom: 8,
+  },
+  aiBannerTitleText: {
+    fontSize: 18,
+    fontWeight: "700",
+    color: "#fff",
+  },
+  aiBannerSubtitle: {
+    fontSize: 14,
+    color: "rgba(255,255,255,0.9)",
+  },
+  aiBannerButton: {
+    backgroundColor: "#fff",
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  aiBannerButtonText: {
+    color: "#8b5cf6",
+    fontWeight: "600",
+    fontSize: 14,
+  },
+  menuGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    paddingHorizontal: 24,
+    gap: 16,
+  },
+  menuCard: {
+    width: "47%",
+    backgroundColor: "#fff",
+    borderRadius: 24,
+    padding: 24,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+    borderWidth: 1,
+    borderColor: "#e5e7eb",
+  },
+  menuIcon: {
+    width: 64,
+    height: 64,
+    borderRadius: 16,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  menuBadge: {
+    position: "absolute",
+    top: -8,
+    right: -8,
+    backgroundColor: "#ef4444",
+    borderRadius: 14,
+    minWidth: 28,
+    height: 28,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 6,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  menuBadgeText: {
+    color: "#fff",
+    fontSize: 12,
+    fontWeight: "700",
+  },
+  menuTitle: {
+    fontSize: 18,
+    fontWeight: "700",
+    color: "#1f2937",
+    marginBottom: 4,
+  },
+  menuDescription: {
+    fontSize: 14,
+    color: "#6b7280",
+  },
+  activitySection: {
+    paddingHorizontal: 24,
+    paddingTop: 32,
+    paddingBottom: 24,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: "700",
+    color: "#1f2937",
+    marginBottom: 16,
+  },
+  activityCard: {
+    backgroundColor: "#fff",
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 12,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+    borderWidth: 1,
+    borderColor: "#e5e7eb",
+  },
+  activityDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+  },
+  activityContent: {
+    flex: 1,
+  },
+  activityAction: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#1f2937",
+  },
+  activityTime: {
+    fontSize: 12,
+    color: "#6b7280",
+    marginTop: 2,
+  },
+});
 
 export default Home;

@@ -1,7 +1,6 @@
 import Echo from "laravel-echo";
 import Pusher from "pusher-js";
-
-window.Pusher = Pusher;
+import Constants from "expo-constants";
 
 let echoInstance = null;
 
@@ -13,15 +12,17 @@ export const initializeEcho = (token) => {
     echoInstance = null;
   }
 
+  const extra = Constants.expoConfig?.extra || {};
+
   const config = {
     broadcaster: "reverb",
-    key: import.meta.env.VITE_REVERB_APP_KEY,
-    wsHost: import.meta.env.VITE_REVERB_HOST,
-    wsPath: import.meta.env.VITE_REVERB_PATH ?? "/reverb-ws",
-    wssPath: import.meta.env.VITE_REVERB_PATH ?? "/reverb-ws",
-    wsPort: import.meta.env.VITE_REVERB_PORT,
-    wssPort: import.meta.env.VITE_REVERB_PORT,
-    forceTLS: (import.meta.env.VITE_REVERB_SCHEME ?? "https") === "https",
+    key: extra.reverbAppKey,
+    wsHost: extra.reverbHost,
+    wsPath: extra.reverbPath || "/reverb-ws",
+    wssPath: extra.reverbPath || "/reverb-ws",
+    wsPort: extra.reverbPort,
+    wssPort: extra.reverbPort,
+    forceTLS: (extra.reverbScheme || "https") === "https",
     enabledTransports: ["ws", "wss"],
     disableStats: true,
     authorizer: (channel, options) => {
@@ -36,7 +37,7 @@ export const initializeEcho = (token) => {
           console.log("Token:", token);
 
           fetch(
-            `${import.meta.env.VITE_API_BASE_URL}/mobile/broadcasting/auth`,
+            `${extra.apiBaseUrl}/mobile/broadcasting/auth`,
             {
               method: "POST",
               headers: {
@@ -79,7 +80,7 @@ export const initializeEcho = (token) => {
   console.log("Echo initialized:", echoInstance);
   console.log(
     "Auth endpoint:",
-    `${import.meta.env.VITE_API_BASE_URL}/mobile/broadcasting/auth`
+    `${extra.apiBaseUrl}/mobile/broadcasting/auth`
   );
 
   return echoInstance;
