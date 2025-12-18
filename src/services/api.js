@@ -1,10 +1,10 @@
 import axios from "axios";
+import Constants from "expo-constants";
 import { useAuthStore } from "../store/authStore";
 
 // Use environment variable for API base URL
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "https://los_galaxy.test";
-// const API_BASE_URL = "https://los_galaxy.test";
+  Constants.expoConfig?.extra?.apiBaseUrl || "https://los.dev.autovert.in";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -34,7 +34,7 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       useAuthStore.getState().logout();
-      window.location.href = "/login";
+      // Navigation will automatically redirect to login screen when token is cleared
     }
     return Promise.reject(error);
   }

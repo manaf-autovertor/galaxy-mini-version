@@ -1,121 +1,127 @@
-# 🚀 Query Mobile App
+# Query Mobile App - React Native
 
-> A production-ready, mobile-first React application for real-time query management, perfectly integrated with your Laravel backend and Reverb WebSocket server.
-
-[![React](https://img.shields.io/badge/React-18.3-blue.svg)](https://react.dev)
-[![Vite](https://img.shields.io/badge/Vite-5.1-purple.svg)](https://vitejs.dev)
-[![Tailwind](https://img.shields.io/badge/Tailwind-3.4-cyan.svg)](https://tailwindcss.com)
-[![License](https://img.shields.io/badge/License-Proprietary-red.svg)](LICENSE)
-
-**[Quick Start](#-quick-installation)** | **[Features](#-features)** | **[Documentation](#-documentation)** | **[Support](#-support)**
-
----
-
-## 📱 What Is This?
-
-A **WhatsApp-like mobile chat interface** that connects to your existing Laravel query system, providing real-time messaging, file uploads, and beautiful mobile-first UX.
+A production-ready React Native mobile application for real-time query management, built with Expo and integrated with Laravel backend.
 
 ## Features
 
 - 🔐 **Laravel Sanctum Authentication** - Secure token-based authentication
-- 💬 **Real-time Chat** - Live messaging with Laravel Reverb/Pusher
-- 📱 **Mobile-First Design** - WhatsApp-like interface optimized for mobile
-- 🎨 **Modern UI** - Tailwind CSS with gradients, shadows, and smooth animations
-- 🔔 **Push Notifications** - Real-time updates with sound notifications
-- 📎 **File Attachments** - Support for document uploads
+- 💬 **Real-time Chat** - Live messaging with Laravel Reverb WebSocket
+- 📱 **Native Mobile App** - Built with React Native and Expo
+- 🎨 **Modern UI** - Beautiful native components with gradients and animations
+- 🔔 **Push Notifications** - Real-time updates with notification support
+- 📎 **File Attachments** - Upload documents with native file picker
 - 🏷️ **Query Management** - Organize queries by tabs (Raised to You, Raised by You)
 - ⚡ **Status Tracking** - Pending, Reverted, and Closed states
 
 ## Tech Stack
 
-- **React 18** - UI library
-- **Vite** - Build tool
-- **React Router** - Navigation
+- **React Native** - Mobile app framework
+- **Expo** - Development platform
+- **React Navigation** - Navigation library
 - **Zustand** - State management
 - **Axios** - HTTP client
 - **Laravel Echo** - WebSocket client
 - **Pusher.js** - Real-time communication
-- **Tailwind CSS** - Styling
 - **date-fns** - Date formatting
-- **Lucide React** - Icons
+- **Expo Vector Icons** - Icon library
 
 ## Prerequisites
 
 - Node.js 18+ and npm
+- Expo CLI (`npm install -g expo-cli`)
+- iOS Simulator (Mac only) or Android Emulator
+- OR Expo Go app on your physical device
 - Laravel backend with Reverb configured
-- Access to Laravel API endpoints
 
 ## Installation
 
-1. **Clone/Create the project:**
-   ```bash
-   cd query-mobile-app
-   ```
-
-2. **Install dependencies:**
+1. **Install dependencies:**
    ```bash
    npm install
    ```
 
-3. **Configure environment:**
-   - Copy `.env.example` to `.env`
-   - Update the values:
-     ```env
-     VITE_API_BASE_URL=https://los.dev.autovert.in
-     VITE_REVERB_APP_KEY=your-app-key
-     VITE_REVERB_HOST=los.dev.autovert.in
-     VITE_REVERB_PORT=443
-     VITE_REVERB_SCHEME=https
-     ```
-
-4. **Start development server:**
-   ```bash
-   npm run dev
+2. **Configure environment:**
+   Update the values in `app.json` under `expo.extra`:
+   ```json
+   {
+     "apiBaseUrl": "https://your-api-url.com",
+     "reverbAppKey": "your-app-key",
+     "reverbHost": "your-host.com",
+     "reverbPort": "443",
+     "reverbScheme": "https",
+     "reverbPath": "/reverb-ws"
+   }
    ```
 
-   The app will be available at `http://localhost:3000`
+3. **Start the development server:**
+   ```bash
+   npm start
+   ```
 
-## Building for Production
-
-```bash
-npm run build
-```
-
-The build output will be in the `dist` folder.
+4. **Run on device/simulator:**
+   - Press `i` for iOS simulator (Mac only)
+   - Press `a` for Android emulator
+   - OR scan the QR code with Expo Go app
 
 ## Project Structure
 
 ```
 query-mobile-app/
+├── App.js                  # Main app entry
+├── index.js                # Root entry point
+├── app.json                # Expo configuration
 ├── src/
-│   ├── pages/              # Page components
-│   │   ├── Login.jsx       # Login page
-│   │   ├── QueryList.jsx   # Query list with tabs
-│   │   └── ChatWindow.jsx  # Chat interface
-│   ├── services/           # API services
+│   ├── navigation/         # Navigation setup
+│   │   └── AppNavigator.js # Main navigator
+│   ├── pages/              # Screen components
+│   │   ├── Login.jsx       # Login screen
+│   │   ├── Home.jsx        # Home dashboard
+│   │   ├── QueryList.jsx   # Query list with filters
+│   │   ├── ChatWindow.jsx  # Chat interface
+│   │   ├── Profile.jsx     # User profile
+│   │   └── AIAssistant.jsx # AI assistant
+│   ├── components/         # Reusable components
+│   │   ├── OfflineIndicator.jsx
+│   │   └── PlaceholderPage.jsx
+│   ├── services/           # API & WebSocket
 │   │   ├── api.js          # Axios instance
-│   │   ├── authService.js  # Authentication
-│   │   ├── queryService.js # Query operations
-│   │   └── echoService.js  # WebSocket/Reverb
-│   ├── store/              # State management
-│   │   ├── authStore.js    # Auth state
-│   │   └── queryStore.js   # Query state
-│   ├── App.jsx             # Main app component
-│   ├── main.jsx            # Entry point
-│   └── index.css           # Global styles
-├── public/
-│   └── sounds/
-│       └── bell.mp3        # Notification sound
-├── index.html
-├── package.json
-├── vite.config.js
-├── tailwind.config.js
-└── postcss.config.js
+│   │   ├── authService.js  # Auth API
+│   │   ├── queryService.js # Query API
+│   │   └── echoService.js  # WebSocket
+│   └── store/              # State management
+│       ├── authStore.js    # Auth state
+│       └── queryStore.js   # Query state
+└── assets/                 # Images, sounds, etc.
 ```
+
+## Building for Production
+
+### iOS (requires Mac)
+```bash
+npm run ios
+eas build --platform ios
+```
+
+### Android
+```bash
+npm run android
+eas build --platform android
+```
+
+## Environment Variables
+
+Configure these in `app.json` under `expo.extra`:
+
+- `apiBaseUrl` - Your Laravel API base URL
+- `reverbAppKey` - Reverb application key
+- `reverbHost` - Reverb WebSocket host
+- `reverbPort` - Reverb port (usually 443)
+- `reverbScheme` - http or https
+- `reverbPath` - Reverb path (usually /reverb-ws)
 
 ## Laravel Backend Requirements
 
-Your Laravel backend needs to provide these API endpoints:
+Your Laravel backend needs these API endpoints:
 
 ### Authentication
 - `POST /api/login` - Login with email/password
@@ -129,75 +135,32 @@ Your Laravel backend needs to provide these API endpoints:
 - `GET /api/queries/{id}/messages` - Get messages
 - `POST /api/queries/{id}/messages` - Send message
 - `POST /api/queries/{id}/documents` - Upload document
-- `POST /api/queries/{id}/close` - Close query
-- `PATCH /api/queries/{id}/status` - Update status
-- `POST /api/queries/{id}/participants` - Add participant
 
 ### WebSocket
-- Reverb/Pusher configured for presence channels
-- Channel: `user.{userId}` (presence channel)
-- Event: `SendUpdate` with payload:
-  ```json
-  {
-    "type": "QUERY_MESSAGE" | "QUERY_MESSAGE_CLOSED",
-    "query_id": 123,
-    "message": "New message",
-    "data": {...}
-  }
-  ```
-
-## Real-time Communication
-
-The app uses Laravel Echo with Reverb to provide real-time updates:
-
-1. **Connection**: Established on login with Bearer token
-2. **Channel**: Joins presence channel `user.{userId}`
-3. **Events**: Listens for `SendUpdate` events
-4. **Updates**: Automatically updates UI and plays notification sound
-
-## Mobile Optimization
-
-- Touch-friendly large tap targets
-- Safe area insets for notched devices
-- Smooth scrolling and animations
-- Optimized bundle size
-- PWA-ready structure
-
-## Styling Conventions
-
-- **Primary Color**: Orange to Amber gradient
-- **Font**: Inter (loaded from Google Fonts)
-- **Border Radius**: Generous use of rounded corners (12px-24px)
-- **Shadows**: Soft, layered shadows for depth
-- **Animations**: Smooth transitions (200-300ms)
+- Reverb configured for presence channels
+- Channel: `user.{userId}`
+- Event: `SendUpdate`
 
 ## Common Issues
 
-### WebSocket Not Connecting
-- Verify Reverb is running on Laravel backend
-- Check VITE_REVERB_* environment variables
-- Ensure SSL/TLS is configured for production
+### Metro Bundler Issues
+```bash
+npx expo start -c
+```
 
-### Authentication Errors
-- Confirm Laravel Sanctum is configured
-- Check CORS settings in Laravel
-- Verify API_BASE_URL is correct
+### Clear Cache
+```bash
+rm -rf node_modules
+npm install
+npx expo start -c
+```
 
-### Messages Not Updating
-- Check Echo connection in browser console
-- Verify presence channel subscription
-- Ensure SendUpdate event is being broadcast
-
-## Development Tips
-
-1. **Hot Module Replacement**: Vite provides instant HMR during development
-2. **State Debugging**: Use React DevTools and check Zustand store
-3. **Network Inspection**: Use browser DevTools to inspect API calls
-4. **Console Logs**: Echo events are logged to console for debugging
+### Android Build Issues
+Make sure you have Android Studio and SDK installed.
 
 ## License
 
-This project is proprietary software for Autovert.
+Proprietary software for Autovert.
 
 ## Support
 

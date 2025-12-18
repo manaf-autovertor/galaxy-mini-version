@@ -1,30 +1,36 @@
-import { useState, useEffect } from "react";
-import { WifiOff, Wifi } from "lucide-react";
-import { isOnline, onNetworkStatusChange } from "../utils/pwaUtils";
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet } from "react-native";
+import NetInfo from "@react-native-community/netinfo";
 
-function OfflineIndicator() {
-  const [online, setOnline] = useState(isOnline());
+export default function OfflineIndicator() {
+  const [isConnected, setIsConnected] = useState(true);
 
   useEffect(() => {
-    const cleanup = onNetworkStatusChange((status) => {
-      setOnline(status);
+    const unsubscribe = NetInfo.addEventListener((state) => {
+      setIsConnected(state.isConnected);
     });
 
-    return cleanup;
+    return () => unsubscribe();
   }, []);
 
-  if (online) {
-    return null;
-  }
+  if (isConnected) return null;
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-red-500 to-orange-500 text-white py-2 px-4 shadow-lg">
-      <div className="flex items-center justify-center gap-2">
-        <WifiOff className="w-4 h-4" />
-        <span className="text-sm font-medium">You are offline</span>
-      </div>
-    </div>
+    <View style={styles.container}>
+      <Text style={styles.text}>⚠️ You are offline</Text>
+    </View>
   );
 }
 
-export default OfflineIndicator;
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#ef4444",
+    padding: 8,
+    alignItems: "center",
+  },
+  text: {
+    color: "#ffffff",
+    fontWeight: "600",
+    fontSize: 14,
+  },
+});

@@ -1,22 +1,35 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Image,
+  ActivityIndicator,
+  StyleSheet,
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from "@expo/vector-icons";
 import { useAuthStore } from "../store/authStore";
 import { authService } from "../services/authService";
-import toast from "react-hot-toast";
-import { LogIn, Mail, Lock, Loader2 } from "lucide-react";
+import Toast from "react-native-toast-message";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
   const setAuth = useAuthStore((state) => state.setAuth);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleSubmit = async () => {
     if (!email || !password) {
-      toast.error("Please enter email and password");
+      Toast.show({
+        type: "error",
+        text1: "Error",
+        text2: "Please enter email and password",
+      });
       return;
     }
 
@@ -27,117 +40,246 @@ function Login() {
 
       if (data.token && data.user) {
         setAuth(data.token, data.user);
-
-        toast.success("Login successful!");
-        navigate("/home");
+        Toast.show({
+          type: "success",
+          text1: "Success",
+          text2: "Login successful!",
+        });
       } else {
-        toast.error("Invalid response from server");
+        Toast.show({
+          type: "error",
+          text1: "Error",
+          text2: "Invalid response from server",
+        });
       }
     } catch (error) {
       console.error("Login error:", error);
-      toast.error(
-        error.response?.data?.message || "Login failed. Please try again."
-      );
+      Toast.show({
+        type: "error",
+        text1: "Login Failed",
+        text2: error.response?.data?.message || "Please try again.",
+      });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50 dark:from-gray-900 dark:via-gray-800 dark:to-stone-900 transition-colors duration-300 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        {/* Logo/Header */}
-        <div className="text-center mb-8">
-          <div className="w-24 h-24 mx-auto mb-4 flex items-center justify-center">
-            <img
-              src="/pwa-192x192.svg"
-              alt="Galaxy Logo"
-              className="w-full h-full object-contain drop-shadow-2xl"
-            />
-          </div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Galaxy
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400">
-            Sign in to continue
-          </p>
-        </div>
-
-        {/* Login Card */}
-        <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-8 space-y-6 transition-colors duration-300">
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Email Field */}
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
-              >
-                Email Address
-              </label>
-              <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border-2 border-gray-200 rounded-2xl focus:border-orange-500 focus:bg-white focus:outline-none transition-all duration-200 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:bg-gray-700 dark:placeholder-gray-400"
-                  placeholder="Enter your email"
-                  disabled={loading}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+      <LinearGradient
+        colors={["#fff7ed", "#ffffff", "#fffbeb"]}
+        style={styles.gradient}
+      >
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
+        >
+          <View style={styles.formContainer}>
+            {/* Logo/Header */}
+            <View style={styles.header}>
+              <View style={styles.logoContainer}>
+                <Image
+                  source={require("../../assets/icon.png")}
+                  style={styles.logo}
+                  resizeMode="contain"
                 />
-              </div>
-            </div>
+              </View>
+              <Text style={styles.title}>Galaxy</Text>
+              <Text style={styles.subtitle}>Sign in to continue</Text>
+            </View>
 
-            {/* Password Field */}
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
+            {/* Login Card */}
+            <View style={styles.card}>
+              {/* Email Field */}
+              <View style={styles.inputGroup}>
+                <Text style={styles.label}>Email Address</Text>
+                <View style={styles.inputWrapper}>
+                  <Ionicons
+                    name="mail-outline"
+                    size={20}
+                    color="#9ca3af"
+                    style={styles.inputIcon}
+                  />
+                  <TextInput
+                    style={styles.input}
+                    value={email}
+                    onChangeText={setEmail}
+                    placeholder="Enter your email"
+                    placeholderTextColor="#9ca3af"
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    editable={!loading}
+                  />
+                </View>
+              </View>
+
+              {/* Password Field */}
+              <View style={styles.inputGroup}>
+                <Text style={styles.label}>Password</Text>
+                <View style={styles.inputWrapper}>
+                  <Ionicons
+                    name="lock-closed-outline"
+                    size={20}
+                    color="#9ca3af"
+                    style={styles.inputIcon}
+                  />
+                  <TextInput
+                    style={styles.input}
+                    value={password}
+                    onChangeText={setPassword}
+                    placeholder="Enter your password"
+                    placeholderTextColor="#9ca3af"
+                    secureTextEntry
+                    editable={!loading}
+                  />
+                </View>
+              </View>
+
+              {/* Submit Button */}
+              <TouchableOpacity
+                onPress={handleSubmit}
+                disabled={loading}
+                activeOpacity={0.8}
               >
-                Password
-              </label>
-              <div className="relative">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border-2 border-gray-200 rounded-2xl focus:border-orange-500 focus:bg-white focus:outline-none transition-all duration-200 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:bg-gray-700 dark:placeholder-gray-400"
-                  placeholder="Enter your password"
-                  disabled={loading}
-                />
-              </div>
-            </div>
+                <LinearGradient
+                  colors={["#f97316", "#d97706"]}
+                  style={styles.submitButton}
+                >
+                  {loading ? (
+                    <>
+                      <ActivityIndicator color="#ffffff" />
+                      <Text style={styles.submitButtonText}>
+                        Signing In...
+                      </Text>
+                    </>
+                  ) : (
+                    <>
+                      <Ionicons name="log-in-outline" size={20} color="#fff" />
+                      <Text style={styles.submitButtonText}>Sign In</Text>
+                    </>
+                  )}
+                </LinearGradient>
+              </TouchableOpacity>
+            </View>
 
-            {/* Submit Button */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full py-4 bg-gradient-to-r from-orange-500 to-amber-600 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl hover:from-orange-600 hover:to-amber-700 active:scale-[0.98] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-            >
-              {loading ? (
-                <>
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                  <span>Signing In...</span>
-                </>
-              ) : (
-                <>
-                  <LogIn className="w-5 h-5" />
-                  <span>Sign In</span>
-                </>
-              )}
-            </button>
-          </form>
-        </div>
-
-        {/* Footer */}
-        <p className="text-center text-sm text-gray-500 dark:text-gray-500 mt-6">
-          Secure login powered by Laravel Sanctum
-        </p>
-      </div>
-    </div>
+            {/* Footer */}
+            <Text style={styles.footer}>
+              Secure login powered by Laravel Sanctum
+            </Text>
+          </View>
+        </ScrollView>
+      </LinearGradient>
+    </KeyboardAvoidingView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  gradient: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    justifyContent: "center",
+    padding: 16,
+  },
+  formContainer: {
+    width: "100%",
+    maxWidth: 448,
+    alignSelf: "center",
+  },
+  header: {
+    alignItems: "center",
+    marginBottom: 32,
+  },
+  logoContainer: {
+    width: 96,
+    height: 96,
+    marginBottom: 16,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  logo: {
+    width: "100%",
+    height: "100%",
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: "700",
+    color: "#1f2937",
+    marginBottom: 8,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: "#6b7280",
+  },
+  card: {
+    backgroundColor: "#ffffff",
+    borderRadius: 24,
+    padding: 32,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 8,
+  },
+  inputGroup: {
+    marginBottom: 20,
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#374151",
+    marginBottom: 8,
+  },
+  inputWrapper: {
+    position: "relative",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  inputIcon: {
+    position: "absolute",
+    left: 16,
+    zIndex: 1,
+  },
+  input: {
+    flex: 1,
+    height: 56,
+    paddingLeft: 48,
+    paddingRight: 16,
+    backgroundColor: "#f9fafb",
+    borderWidth: 2,
+    borderColor: "#e5e7eb",
+    borderRadius: 16,
+    fontSize: 16,
+    color: "#1f2937",
+  },
+  submitButton: {
+    height: 56,
+    borderRadius: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    marginTop: 4,
+  },
+  submitButtonText: {
+    color: "#ffffff",
+    fontSize: 16,
+    fontWeight: "600",
+    marginLeft: 8,
+  },
+  footer: {
+    textAlign: "center",
+    fontSize: 14,
+    color: "#6b7280",
+    marginTop: 24,
+  },
+});
 
 export default Login;
