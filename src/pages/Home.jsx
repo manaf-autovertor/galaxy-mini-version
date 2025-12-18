@@ -213,7 +213,7 @@ function Home() {
                 <h3 className="text-white font-bold text-lg">AI Assistant</h3>
               </div>
               <p className="text-white/90 text-sm">
-                Need help? Ask me anything!
+                Need help? Ask me anything!!!
               </p>
             </div>
             <button
