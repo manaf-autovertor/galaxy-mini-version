@@ -75,7 +75,7 @@ function Home() {
     },
     {
       id: "deviations",
-      title: "Deviations",
+      title: "Pening Deviations",
       description: "Review deviations",
       icon: GitBranch,
       gradient: "from-purple-500 to-pink-500",
