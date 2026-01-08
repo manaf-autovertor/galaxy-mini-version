@@ -56,12 +56,12 @@ function Home() {
 
   const menuItems = [
     {
-      id: "applications",
-      title: "Applications",
-      description: "View & manage applications",
+      id: "doc-upload",
+      title: "DOC Upload",
+      description: "Upload application documents",
       icon: FileText,
       gradient: "from-blue-500 to-cyan-500",
-      route: "/applications",
+      route: "/doc-upload",
       count: null,
     },
     {

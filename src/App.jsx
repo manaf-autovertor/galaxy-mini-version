@@ -23,6 +23,8 @@ import ChatWindow from "./pages/ChatWindow";
 import PlaceholderPage from "./pages/PlaceholderPage";
 import Profile from "./pages/Profile";
 import AIAssistant from "./pages/AIAssistant";
+import DocUpload from "./pages/DocUpload";
+import DocumentUploadDetail from "./pages/DocumentUploadDetail";
 
 function ProtectedRoute({ children }) {
   const token = useAuthStore((state) => state.token);
@@ -113,6 +115,15 @@ function App() {
             <Route path="/ai-assistant" element={<AIAssistant />} />
             <Route path="/queries" element={<QueryList />} />
             <Route path="/chat/:queryId" element={<ChatWindow />} />
+            <Route path="/doc-upload" element={<DocUpload />} />
+            <Route
+              path="/doc-upload/:applicationId"
+              element={<DocumentUploadDetail />}
+            />
+            <Route
+              path="/doc-upload/:applicationId/:queryId"
+              element={<DocumentUploadDetail />}
+            />
             <Route
               path="/applications"
               element={

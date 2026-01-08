@@ -486,7 +486,11 @@ function ChatWindow() {
           {/* Input Row */}
           <div className="flex items-center gap-3">
             <button
-              onClick={() => fileInputRef.current?.click()}
+              onClick={() =>
+                navigate(
+                  `/doc-upload/${selectedQuery?.application_id}/${queryId}`
+                )
+              }
               className="p-3.5 bg-gradient-to-br from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 rounded-2xl transition-all flex-shrink-0 shadow-lg hover:shadow-xl active:scale-95 h-[52px] w-[52px]"
             >
               <Paperclip className="w-5 h-5 text-white" />
