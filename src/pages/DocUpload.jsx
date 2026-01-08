@@ -13,6 +13,7 @@ import {
   Loader2,
   Upload,
   Calendar,
+  ExternalLink,
 } from "lucide-react";
 import api from "../services/api";
 import toast from "react-hot-toast";
@@ -153,6 +154,22 @@ function DocUpload() {
                         <p className="text-sm text-gray-500">
                           App ID: #{application.id}
                         </p>
+                        {application.app_partner_loan_id && (
+                          <div className="mt-1">
+                            <p className="text-[11px] text-indigo-600 leading-none mb-1">
+                              Partner Loan ID
+                            </p>
+                            <a
+                              href={`https://los.staging-portal-v2.autovertplug.com/r/${application.app_partner_loan_id}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-1 text-sm hover:opacity-70 transition-opacity"
+                            >
+                              <span>{application.app_partner_loan_id}</span>
+                              <ExternalLink className="w-4 h-4" />
+                            </a>
+                          </div>
+                        )}
                       </div>
                     </div>
                     <button
