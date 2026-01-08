@@ -103,7 +103,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/login" element={<Login />} />
-          
+
           {/* Routes without bottom navigation */}
           <Route
             path="/doc-upload"
