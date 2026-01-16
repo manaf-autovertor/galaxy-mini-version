@@ -202,6 +202,58 @@ function Home() {
 
       {/* Main Content */}
       <div className="px-6 py-6 pb-32">
+        {/* Loan Journey Banner */}
+        <div
+          className="mb-6 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-600 rounded-3xl p-6 shadow-2xl relative overflow-hidden group cursor-pointer hover:shadow-3xl transition-all duration-300"
+          onClick={() => {
+            const isDev = import.meta.env.MODE === "development";
+            const loanUrl = isDev
+              ? "https://los.dmsdemo.autovertplug.com/login"
+              : "https://los.dms.autovertplug.com/login";
+            window.open(loanUrl, "_blank");
+          }}
+        >
+          <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full -mr-24 -mt-24 group-hover:scale-110 transition-transform duration-500"></div>
+          <div className="absolute bottom-0 left-0 w-36 h-36 bg-white/10 rounded-full -ml-18 -mb-18 group-hover:scale-110 transition-transform duration-500"></div>
+          <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-all duration-300"></div>
+
+          <div className="relative z-10">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-2">
+                  <Zap className="w-7 h-7 text-yellow-300 animate-pulse" />
+                  <h3 className="text-white font-bold text-xl">
+                    Onboard New Loan Application
+                  </h3>
+                </div>
+                <p className="text-white/95 text-sm font-medium">
+                  Process and manage loan applications efficiently 🚀
+                </p>
+              </div>
+              <div className="ml-4 bg-white/20 backdrop-blur-sm px-5 py-3 rounded-2xl group-hover:bg-white group-hover:text-emerald-600 transition-all duration-300 border-2 border-white/30">
+                <span className="text-white font-bold text-sm group-hover:text-emerald-600">
+                  Start Now →
+                </span>
+              </div>
+            </div>
+
+            <div className="flex gap-4 text-white/90 text-xs">
+              <div className="flex items-center gap-1">
+                <Target className="w-4 h-4" />
+                <span>Quick Onboarding</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <FileCheck className="w-4 h-4" />
+                <span>Easy Processing</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <TrendingUp className="w-4 h-4" />
+                <span>Track Progress</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* AI Assistant Banner */}
         <div className="mb-6 bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 rounded-3xl p-6 shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -mr-20 -mt-20"></div>
@@ -213,7 +265,7 @@ function Home() {
                 <h3 className="text-white font-bold text-lg">AI Assistant</h3>
               </div>
               <p className="text-white/90 text-sm">
-                Need help? Ask me anything!!!
+                Need help? Ask me anything!
               </p>
             </div>
             <button
